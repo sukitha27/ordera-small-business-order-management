@@ -103,7 +103,7 @@ function ReportsPage() {
                 <XAxis dataKey="date" stroke="oklch(0.5 0.025 230)" fontSize={12} />
                 <YAxis stroke="oklch(0.5 0.025 230)" fontSize={12} />
                 <Tooltip
-                  formatter={(v: number) => formatLKR(v)}
+                  formatter={(v) => formatLKR(Number(v))}
                   contentStyle={{
                     background: "oklch(1 0 0)",
                     border: "1px solid oklch(0.91 0.01 220)",
