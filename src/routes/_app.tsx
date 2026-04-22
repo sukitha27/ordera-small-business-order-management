@@ -8,6 +8,7 @@ import {
   Settings,
   LogOut,
   Menu,
+  Shield,
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/_app")({
 });
 
 function AppLayout() {
-  const { user, business, loading, t, signOut, lang, setLang } = useAuth();
+  const { user, business, loading, t, signOut, lang, setLang, isAdmin } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -40,6 +41,7 @@ function AppLayout() {
     { to: "/customers", icon: Users, label: t("customers") },
     { to: "/reports", icon: BarChart3, label: t("reports") },
     { to: "/settings", icon: Settings, label: t("settings") },
+    ...(isAdmin ? [{ to: "/admin", icon: Shield, label: "Admin" }] : []),
   ] as const;
 
   const Sidebar = (

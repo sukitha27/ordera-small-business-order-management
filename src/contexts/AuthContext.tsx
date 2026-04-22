@@ -21,6 +21,7 @@ interface AuthContextValue {
   session: Session | null;
   business: Business | null;
   loading: boolean;
+  isAdmin: boolean;
   lang: Lang;
   t: (key: keyof typeof dict.en) => string;
   setLang: (l: Lang) => void;
@@ -36,6 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [business, setBusiness] = useState<Business | null>(null);
   const [loading, setLoading] = useState(true);
   const [lang, setLangState] = useState<Lang>("en");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const loadBusiness = async (uid: string) => {
     const { data } = await supabase
@@ -49,22 +51,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const loadAdmin = async (uid: string) => {
+    const { data } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", uid)
+      .eq("role", "admin")
+      .maybeSingle();
+    setIsAdmin(!!data);
+  };
+
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
       setSession(sess);
       setUser(sess?.user ?? null);
       if (sess?.user) {
-        setTimeout(() => loadBusiness(sess.user.id), 0);
+        setTimeout(() => {
+          loadBusiness(sess.user.id);
+          loadAdmin(sess.user.id);
+        }, 0);
       } else {
         setBusiness(null);
+        setIsAdmin(false);
       }
     });
 
     supabase.auth.getSession().then(({ data: { session: sess } }) => {
       setSession(sess);
       setUser(sess?.user ?? null);
-      if (sess?.user) loadBusiness(sess.user.id).finally(() => setLoading(false));
-      else setLoading(false);
+      if (sess?.user) {
+        Promise.all([loadBusiness(sess.user.id), loadAdmin(sess.user.id)]).finally(() =>
+          setLoading(false),
+        );
+      } else setLoading(false);
     });
 
     return () => sub.subscription.unsubscribe();
@@ -89,11 +108,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setSession(null);
     setBusiness(null);
+    setIsAdmin(false);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, session, business, loading, lang, t, setLang, refreshBusiness, signOut }}
+      value={{ user, session, business, loading, isAdmin, lang, t, setLang, refreshBusiness, signOut }}
     >
       {children}
     </AuthContext.Provider>
