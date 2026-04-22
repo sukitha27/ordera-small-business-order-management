@@ -1,4 +1,4 @@
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -31,6 +31,7 @@ interface Stat {
 
 function AdminPage() {
   const { isAdmin, loading } = useAuth();
+  const navigate = useNavigate();
   const [rows, setRows] = useState<BusinessRow[]>([]);
   const [stats, setStats] = useState<Record<string, Stat>>({});
   const [adminIds, setAdminIds] = useState<Set<string>>(new Set());
@@ -61,7 +62,11 @@ function AdminPage() {
     if (isAdmin) load();
   }, [isAdmin]);
 
-  if (!loading && !isAdmin) return <Navigate to="/dashboard" />;
+  useEffect(() => {
+    if (!loading && !isAdmin) navigate({ to: "/dashboard" });
+  }, [loading, isAdmin, navigate]);
+
+  if (!isAdmin) return null;
 
   const filtered = rows.filter((r) => {
     const s = q.toLowerCase();
