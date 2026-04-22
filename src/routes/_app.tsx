@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, Link, useLocation, Navigate, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, Link, useLocation, useNavigate } from "@tanstack/react-router";
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -10,7 +10,7 @@ import {
   Menu,
   Shield,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -25,7 +25,10 @@ function AppLayout() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  if (!loading && !user) return <Navigate to="/login" />;
+  useEffect(() => {
+    if (!loading && !user) navigate({ to: "/login" });
+  }, [loading, user, navigate]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -33,6 +36,7 @@ function AppLayout() {
       </div>
     );
   }
+  if (!user) return null;
 
   const nav = [
     { to: "/dashboard", icon: LayoutDashboard, label: t("dashboard") },
