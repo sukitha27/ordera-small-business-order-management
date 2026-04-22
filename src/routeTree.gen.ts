@@ -22,6 +22,8 @@ import { Route as AppAdminRouteImport } from './routes/_app/admin'
 import { Route as AppOrdersIndexRouteImport } from './routes/_app/orders.index'
 import { Route as AppOrdersNewRouteImport } from './routes/_app/orders.new'
 import { Route as AppOrdersOrderIdRouteImport } from './routes/_app/orders.$orderId'
+import { Route as AppOrdersOrderIdWaybillRouteImport } from './routes/_app/orders.$orderId.waybill'
+import { Route as AppOrdersOrderIdInvoiceRouteImport } from './routes/_app/orders.$orderId.invoice'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -87,6 +89,16 @@ const AppOrdersOrderIdRoute = AppOrdersOrderIdRouteImport.update({
   path: '/orders/$orderId',
   getParentRoute: () => AppRoute,
 } as any)
+const AppOrdersOrderIdWaybillRoute = AppOrdersOrderIdWaybillRouteImport.update({
+  id: '/waybill',
+  path: '/waybill',
+  getParentRoute: () => AppOrdersOrderIdRoute,
+} as any)
+const AppOrdersOrderIdInvoiceRoute = AppOrdersOrderIdInvoiceRouteImport.update({
+  id: '/invoice',
+  path: '/invoice',
+  getParentRoute: () => AppOrdersOrderIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -98,9 +110,11 @@ export interface FileRoutesByFullPath {
   '/products': typeof AppProductsRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
-  '/orders/$orderId': typeof AppOrdersOrderIdRoute
+  '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
   '/orders/': typeof AppOrdersIndexRoute
+  '/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
+  '/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -112,9 +126,11 @@ export interface FileRoutesByTo {
   '/products': typeof AppProductsRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
-  '/orders/$orderId': typeof AppOrdersOrderIdRoute
+  '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
   '/orders': typeof AppOrdersIndexRoute
+  '/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
+  '/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -128,9 +144,11 @@ export interface FileRoutesById {
   '/_app/products': typeof AppProductsRoute
   '/_app/reports': typeof AppReportsRoute
   '/_app/settings': typeof AppSettingsRoute
-  '/_app/orders/$orderId': typeof AppOrdersOrderIdRoute
+  '/_app/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/_app/orders/new': typeof AppOrdersNewRoute
   '/_app/orders/': typeof AppOrdersIndexRoute
+  '/_app/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
+  '/_app/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -147,6 +165,8 @@ export interface FileRouteTypes {
     | '/orders/$orderId'
     | '/orders/new'
     | '/orders/'
+    | '/orders/$orderId/invoice'
+    | '/orders/$orderId/waybill'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -161,6 +181,8 @@ export interface FileRouteTypes {
     | '/orders/$orderId'
     | '/orders/new'
     | '/orders'
+    | '/orders/$orderId/invoice'
+    | '/orders/$orderId/waybill'
   id:
     | '__root__'
     | '/'
@@ -176,6 +198,8 @@ export interface FileRouteTypes {
     | '/_app/orders/$orderId'
     | '/_app/orders/new'
     | '/_app/orders/'
+    | '/_app/orders/$orderId/invoice'
+    | '/_app/orders/$orderId/waybill'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -278,8 +302,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppOrdersOrderIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/orders/$orderId/waybill': {
+      id: '/_app/orders/$orderId/waybill'
+      path: '/waybill'
+      fullPath: '/orders/$orderId/waybill'
+      preLoaderRoute: typeof AppOrdersOrderIdWaybillRouteImport
+      parentRoute: typeof AppOrdersOrderIdRoute
+    }
+    '/_app/orders/$orderId/invoice': {
+      id: '/_app/orders/$orderId/invoice'
+      path: '/invoice'
+      fullPath: '/orders/$orderId/invoice'
+      preLoaderRoute: typeof AppOrdersOrderIdInvoiceRouteImport
+      parentRoute: typeof AppOrdersOrderIdRoute
+    }
   }
 }
+
+interface AppOrdersOrderIdRouteChildren {
+  AppOrdersOrderIdInvoiceRoute: typeof AppOrdersOrderIdInvoiceRoute
+  AppOrdersOrderIdWaybillRoute: typeof AppOrdersOrderIdWaybillRoute
+}
+
+const AppOrdersOrderIdRouteChildren: AppOrdersOrderIdRouteChildren = {
+  AppOrdersOrderIdInvoiceRoute: AppOrdersOrderIdInvoiceRoute,
+  AppOrdersOrderIdWaybillRoute: AppOrdersOrderIdWaybillRoute,
+}
+
+const AppOrdersOrderIdRouteWithChildren =
+  AppOrdersOrderIdRoute._addFileChildren(AppOrdersOrderIdRouteChildren)
 
 interface AppRouteChildren {
   AppAdminRoute: typeof AppAdminRoute
@@ -288,7 +339,7 @@ interface AppRouteChildren {
   AppProductsRoute: typeof AppProductsRoute
   AppReportsRoute: typeof AppReportsRoute
   AppSettingsRoute: typeof AppSettingsRoute
-  AppOrdersOrderIdRoute: typeof AppOrdersOrderIdRoute
+  AppOrdersOrderIdRoute: typeof AppOrdersOrderIdRouteWithChildren
   AppOrdersNewRoute: typeof AppOrdersNewRoute
   AppOrdersIndexRoute: typeof AppOrdersIndexRoute
 }
@@ -300,7 +351,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppProductsRoute: AppProductsRoute,
   AppReportsRoute: AppReportsRoute,
   AppSettingsRoute: AppSettingsRoute,
-  AppOrdersOrderIdRoute: AppOrdersOrderIdRoute,
+  AppOrdersOrderIdRoute: AppOrdersOrderIdRouteWithChildren,
   AppOrdersNewRoute: AppOrdersNewRoute,
   AppOrdersIndexRoute: AppOrdersIndexRoute,
 }
