@@ -105,7 +105,7 @@ function AdminPage() {
     <div className="container mx-auto p-6 lg:p-10">
       <PageHeader
         title="Platform Admin"
-        subtitle="Oversight across all Ordera businesses"
+        description="Oversight across all Ordera businesses"
       />
 
       <div className="grid gap-4 sm:grid-cols-3 mb-6">
