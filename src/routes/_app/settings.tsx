@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_app/settings")({
 });
 
 function SettingsPage() {
-  const { t, business, refreshBusiness, lang, setLang } = useAuth();
+  const { t, business, refreshBusiness, lang, setLang, updatePassword } = useAuth();
   const [form, setForm] = useState({
     business_name: "",
     owner_name: "",
@@ -23,6 +23,10 @@ function SettingsPage() {
     city: "",
   });
   const [saving, setSaving] = useState(false);
+
+  // Change-password local state
+  const [pwd, setPwd] = useState({ current: "", next: "", confirm: "" });
+  const [changingPassword, setChangingPassword] = useState(false);
 
   useEffect(() => {
     if (business)
@@ -43,6 +47,37 @@ function SettingsPage() {
     if (error) return toast.error(error.message);
     toast.success(t("saved"));
     refreshBusiness();
+  };
+
+  const changePassword = async () => {
+    if (pwd.next.length < 6) return toast.error(t("passwordTooShort"));
+    if (pwd.next !== pwd.confirm) return toast.error(t("passwordMismatch"));
+
+    setChangingPassword(true);
+
+    // Re-authenticate with current password first — Supabase doesn't require this
+    // for updateUser({ password }), but doing it prevents session-hijack scenarios
+    // where someone with an open tab could change the password.
+    const userEmail = (await supabase.auth.getUser()).data.user?.email;
+    if (!userEmail) {
+      setChangingPassword(false);
+      return toast.error("Could not verify user");
+    }
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: userEmail,
+      password: pwd.current,
+    });
+    if (signInError) {
+      setChangingPassword(false);
+      return toast.error(t("currentPasswordWrong"));
+    }
+
+    const { error } = await updatePassword(pwd.next);
+    setChangingPassword(false);
+    if (error) return toast.error(error.message);
+    toast.success(t("passwordChanged"));
+    setPwd({ current: "", next: "", confirm: "" });
   };
 
   return (
@@ -67,7 +102,7 @@ function SettingsPage() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-border bg-card p-6">
+      <div className="rounded-xl border border-border bg-card p-6 mb-6">
         <h2 className="font-semibold mb-4">{t("profile")}</h2>
         <div className="space-y-4">
           <div className="space-y-2">
@@ -95,6 +130,52 @@ function SettingsPage() {
           <div className="pt-2">
             <Button onClick={save} disabled={saving}>
               {saving ? "..." : t("save")}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-border bg-card p-6">
+        <h2 className="font-semibold mb-1">{t("changePassword")}</h2>
+        <p className="text-xs text-muted-foreground mb-4">{t("changePasswordDesc")}</p>
+        <div className="space-y-4 max-w-md">
+          <div className="space-y-2">
+            <Label>{t("currentPassword")}</Label>
+            <Input
+              type="password"
+              autoComplete="current-password"
+              value={pwd.current}
+              onChange={(e) => setPwd({ ...pwd, current: e.target.value })}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>{t("newPassword")}</Label>
+            <Input
+              type="password"
+              autoComplete="new-password"
+              minLength={6}
+              value={pwd.next}
+              onChange={(e) => setPwd({ ...pwd, next: e.target.value })}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>{t("confirmPassword")}</Label>
+            <Input
+              type="password"
+              autoComplete="new-password"
+              minLength={6}
+              value={pwd.confirm}
+              onChange={(e) => setPwd({ ...pwd, confirm: e.target.value })}
+            />
+          </div>
+          <div className="pt-2">
+            <Button
+              onClick={changePassword}
+              disabled={
+                changingPassword || !pwd.current || !pwd.next || !pwd.confirm
+              }
+            >
+              {changingPassword ? "..." : t("changePassword")}
             </Button>
           </div>
         </div>

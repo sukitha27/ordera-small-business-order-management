@@ -27,6 +27,8 @@ interface AuthContextValue {
   setLang: (l: Lang) => void;
   refreshBusiness: () => Promise<void>;
   signOut: () => Promise<void>;
+  sendPasswordResetEmail: (email: string) => Promise<{ error: Error | null }>;
+  updatePassword: (newPassword: string) => Promise<{ error: Error | null }>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -111,9 +113,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsAdmin(false);
   };
 
+  // Trigger Supabase to send a password-reset email.
+  // The redirectTo must match an entry in the Supabase dashboard Auth → URL Configuration → Redirect URLs.
+  const sendPasswordResetEmail = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    return { error };
+  };
+
+  // Update the current user's password. Used both in the reset flow
+  // (after arriving from the email link) and in Settings → Change password.
+  const updatePassword = async (newPassword: string) => {
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    return { error };
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, session, business, loading, isAdmin, lang, t, setLang, refreshBusiness, signOut }}
+      value={{
+        user,
+        session,
+        business,
+        loading,
+        isAdmin,
+        lang,
+        t,
+        setLang,
+        refreshBusiness,
+        signOut,
+        sendPasswordResetEmail,
+        updatePassword,
+      }}
     >
       {children}
     </AuthContext.Provider>

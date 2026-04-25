@@ -59,7 +59,15 @@ function LoginPage() {
             <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
           <div className="space-y-2">
-            <Label>{t("password")}</Label>
+            <div className="flex items-center justify-between">
+              <Label>{t("password")}</Label>
+              <Link
+                to="/forgot-password"
+                className="text-xs text-muted-foreground hover:text-primary hover:underline"
+              >
+                {t("forgotPassword")}
+              </Link>
+            </div>
             <Input
               type="password"
               required

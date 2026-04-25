@@ -11,6 +11,7 @@ const STATUS_STYLES: Record<string, string> = {
   unpaid: "bg-warning/15 text-warning-foreground border-warning/30",
   paid: "bg-success/15 text-success border-success/30",
   refunded: "bg-muted text-muted-foreground border-border",
+  pending_verification: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30",
 };
 
 export function StatusBadge({ value, kind = "status" }: { value: string; kind?: "status" | "payment" }) {

@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
@@ -20,8 +22,10 @@ import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppCustomersRouteImport } from './routes/_app/customers'
 import { Route as AppAdminRouteImport } from './routes/_app/admin'
 import { Route as AppOrdersIndexRouteImport } from './routes/_app/orders.index'
+import { Route as AppOrdersPrintBatchRouteImport } from './routes/_app/orders.print-batch'
 import { Route as AppOrdersNewRouteImport } from './routes/_app/orders.new'
 import { Route as AppOrdersOrderIdRouteImport } from './routes/_app/orders.$orderId'
+import { Route as AppCustomersCustomerIdRouteImport } from './routes/_app/customers.$customerId'
 import { Route as AppOrdersOrderIdWaybillRouteImport } from './routes/_app/orders.$orderId.waybill'
 import { Route as AppOrdersOrderIdInvoiceRouteImport } from './routes/_app/orders.$orderId.invoice'
 
@@ -30,9 +34,19 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRoute = AppRouteImport.update({
@@ -79,6 +93,11 @@ const AppOrdersIndexRoute = AppOrdersIndexRouteImport.update({
   path: '/orders/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppOrdersPrintBatchRoute = AppOrdersPrintBatchRouteImport.update({
+  id: '/orders/print-batch',
+  path: '/orders/print-batch',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppOrdersNewRoute = AppOrdersNewRouteImport.update({
   id: '/orders/new',
   path: '/orders/new',
@@ -88,6 +107,11 @@ const AppOrdersOrderIdRoute = AppOrdersOrderIdRouteImport.update({
   id: '/orders/$orderId',
   path: '/orders/$orderId',
   getParentRoute: () => AppRoute,
+} as any)
+const AppCustomersCustomerIdRoute = AppCustomersCustomerIdRouteImport.update({
+  id: '/$customerId',
+  path: '/$customerId',
+  getParentRoute: () => AppCustomersRoute,
 } as any)
 const AppOrdersOrderIdWaybillRoute = AppOrdersOrderIdWaybillRouteImport.update({
   id: '/waybill',
@@ -102,32 +126,40 @@ const AppOrdersOrderIdInvoiceRoute = AppOrdersOrderIdInvoiceRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof AppAdminRoute
-  '/customers': typeof AppCustomersRoute
+  '/customers': typeof AppCustomersRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
   '/products': typeof AppProductsRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
+  '/customers/$customerId': typeof AppCustomersCustomerIdRoute
   '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
+  '/orders/print-batch': typeof AppOrdersPrintBatchRoute
   '/orders/': typeof AppOrdersIndexRoute
   '/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof AppAdminRoute
-  '/customers': typeof AppCustomersRoute
+  '/customers': typeof AppCustomersRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
   '/products': typeof AppProductsRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
+  '/customers/$customerId': typeof AppCustomersCustomerIdRoute
   '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
+  '/orders/print-batch': typeof AppOrdersPrintBatchRoute
   '/orders': typeof AppOrdersIndexRoute
   '/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
@@ -136,16 +168,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_app/admin': typeof AppAdminRoute
-  '/_app/customers': typeof AppCustomersRoute
+  '/_app/customers': typeof AppCustomersRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/products': typeof AppProductsRoute
   '/_app/reports': typeof AppReportsRoute
   '/_app/settings': typeof AppSettingsRoute
+  '/_app/customers/$customerId': typeof AppCustomersCustomerIdRoute
   '/_app/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/_app/orders/new': typeof AppOrdersNewRoute
+  '/_app/orders/print-batch': typeof AppOrdersPrintBatchRoute
   '/_app/orders/': typeof AppOrdersIndexRoute
   '/_app/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/_app/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
@@ -154,7 +190,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/admin'
     | '/customers'
@@ -162,15 +200,19 @@ export interface FileRouteTypes {
     | '/products'
     | '/reports'
     | '/settings'
+    | '/customers/$customerId'
     | '/orders/$orderId'
     | '/orders/new'
+    | '/orders/print-batch'
     | '/orders/'
     | '/orders/$orderId/invoice'
     | '/orders/$orderId/waybill'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/admin'
     | '/customers'
@@ -178,8 +220,10 @@ export interface FileRouteTypes {
     | '/products'
     | '/reports'
     | '/settings'
+    | '/customers/$customerId'
     | '/orders/$orderId'
     | '/orders/new'
+    | '/orders/print-batch'
     | '/orders'
     | '/orders/$orderId/invoice'
     | '/orders/$orderId/waybill'
@@ -187,7 +231,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/_app/admin'
     | '/_app/customers'
@@ -195,8 +241,10 @@ export interface FileRouteTypes {
     | '/_app/products'
     | '/_app/reports'
     | '/_app/settings'
+    | '/_app/customers/$customerId'
     | '/_app/orders/$orderId'
     | '/_app/orders/new'
+    | '/_app/orders/print-batch'
     | '/_app/orders/'
     | '/_app/orders/$orderId/invoice'
     | '/_app/orders/$orderId/waybill'
@@ -205,7 +253,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
 }
 
@@ -218,11 +268,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
@@ -288,6 +352,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppOrdersIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/orders/print-batch': {
+      id: '/_app/orders/print-batch'
+      path: '/orders/print-batch'
+      fullPath: '/orders/print-batch'
+      preLoaderRoute: typeof AppOrdersPrintBatchRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/orders/new': {
       id: '/_app/orders/new'
       path: '/orders/new'
@@ -301,6 +372,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/orders/$orderId'
       preLoaderRoute: typeof AppOrdersOrderIdRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/_app/customers/$customerId': {
+      id: '/_app/customers/$customerId'
+      path: '/$customerId'
+      fullPath: '/customers/$customerId'
+      preLoaderRoute: typeof AppCustomersCustomerIdRouteImport
+      parentRoute: typeof AppCustomersRoute
     }
     '/_app/orders/$orderId/waybill': {
       id: '/_app/orders/$orderId/waybill'
@@ -319,6 +397,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppCustomersRouteChildren {
+  AppCustomersCustomerIdRoute: typeof AppCustomersCustomerIdRoute
+}
+
+const AppCustomersRouteChildren: AppCustomersRouteChildren = {
+  AppCustomersCustomerIdRoute: AppCustomersCustomerIdRoute,
+}
+
+const AppCustomersRouteWithChildren = AppCustomersRoute._addFileChildren(
+  AppCustomersRouteChildren,
+)
+
 interface AppOrdersOrderIdRouteChildren {
   AppOrdersOrderIdInvoiceRoute: typeof AppOrdersOrderIdInvoiceRoute
   AppOrdersOrderIdWaybillRoute: typeof AppOrdersOrderIdWaybillRoute
@@ -334,25 +424,27 @@ const AppOrdersOrderIdRouteWithChildren =
 
 interface AppRouteChildren {
   AppAdminRoute: typeof AppAdminRoute
-  AppCustomersRoute: typeof AppCustomersRoute
+  AppCustomersRoute: typeof AppCustomersRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
   AppProductsRoute: typeof AppProductsRoute
   AppReportsRoute: typeof AppReportsRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppOrdersOrderIdRoute: typeof AppOrdersOrderIdRouteWithChildren
   AppOrdersNewRoute: typeof AppOrdersNewRoute
+  AppOrdersPrintBatchRoute: typeof AppOrdersPrintBatchRoute
   AppOrdersIndexRoute: typeof AppOrdersIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppAdminRoute: AppAdminRoute,
-  AppCustomersRoute: AppCustomersRoute,
+  AppCustomersRoute: AppCustomersRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
   AppProductsRoute: AppProductsRoute,
   AppReportsRoute: AppReportsRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppOrdersOrderIdRoute: AppOrdersOrderIdRouteWithChildren,
   AppOrdersNewRoute: AppOrdersNewRoute,
+  AppOrdersPrintBatchRoute: AppOrdersPrintBatchRoute,
   AppOrdersIndexRoute: AppOrdersIndexRoute,
 }
 
@@ -361,7 +453,9 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport

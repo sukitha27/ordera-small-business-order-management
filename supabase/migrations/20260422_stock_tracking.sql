@@ -1,11 +1,3 @@
--- =========================================
--- STOCK AUTO-MANAGEMENT
--- Keeps products.stock in sync with order_items.
--- Cancelled orders do NOT consume stock (handled via orders status trigger).
--- =========================================
-
--- Helper: adjust stock for a given product by a delta (can be negative).
--- Uses explicit lock to prevent concurrent overselling.
 CREATE OR REPLACE FUNCTION public.adjust_product_stock(_product_id uuid, _delta integer)
 RETURNS void
 LANGUAGE plpgsql

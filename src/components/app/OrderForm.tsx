@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Phone, CheckCircle2, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/select";
 import { PageHeader } from "@/components/app/PageHeader";
 import { toast } from "sonner";
+import { buildOrderMessage, buildWhatsAppLink, whatsappButtonLabel } from "@/lib/whatsapp";
+import { SlipUploadPanel } from "@/components/app/SlipUploadPanel";
 
 interface Item {
   id?: string;
@@ -34,6 +36,7 @@ interface Item {
 
 interface OrderState {
   order_number: string;
+  customer_id: string | null;
   customer_name: string;
   customer_phone: string;
   customer_address: string;
@@ -49,6 +52,7 @@ interface OrderState {
 
 const emptyOrder: OrderState = {
   order_number: "",
+  customer_id: null,
   customer_name: "",
   customer_phone: "",
   customer_address: "",
@@ -62,6 +66,24 @@ const emptyOrder: OrderState = {
   notes: "",
 };
 
+// Strip everything except digits, then drop a leading 94 or 0 so
+// '+94 77 123-4567', '0771234567', and '94771234567' all normalize to '771234567'.
+function normalizePhone(raw: string): string {
+  const digits = (raw || "").replace(/\D/g, "");
+  if (digits.startsWith("94")) return digits.slice(2);
+  if (digits.startsWith("0")) return digits.slice(1);
+  return digits;
+}
+
+interface CustomerMatch {
+  id: string;
+  name: string;
+  phone: string | null;
+  address: string | null;
+  city: string | null;
+  order_count?: number;
+}
+
 export function OrderForm({
   existing,
   onDone,
@@ -74,10 +96,17 @@ export function OrderForm({
   const [order, setOrder] = useState<OrderState>(emptyOrder);
   const [items, setItems] = useState<Item[]>([]);
 
+  // Phone autocomplete state
+  const [phoneQuery, setPhoneQuery] = useState("");
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [activeSuggestion, setActiveSuggestion] = useState(0);
+  const phoneWrapperRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (existing) {
       setOrder({
         order_number: existing.order.order_number,
+        customer_id: existing.order.customer_id ?? null,
         customer_name: existing.order.customer_name,
         customer_phone: existing.order.customer_phone ?? "",
         customer_address: existing.order.customer_address ?? "",
@@ -104,6 +133,25 @@ export function OrderForm({
     }
   }, [existing]);
 
+  // Close suggestions when clicking outside the phone area
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (!phoneWrapperRef.current) return;
+      if (!phoneWrapperRef.current.contains(e.target as Node)) {
+        setSuggestionsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  // Debounce phone typing -> only query after 250ms of no typing
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  useEffect(() => {
+    const id = setTimeout(() => setDebouncedQuery(phoneQuery), 250);
+    return () => clearTimeout(id);
+  }, [phoneQuery]);
+
   const { data: products = [] } = useQuery({
     queryKey: ["products", business?.id],
     enabled: !!business?.id,
@@ -113,7 +161,82 @@ export function OrderForm({
     },
   });
 
-  const subtotal = items.reduce((s, i) => s + i.quantity * i.unit_price, 0);
+  // Customer phone suggestions — exact-ish match first, normalized fallback
+  const { data: suggestions = [] } = useQuery<CustomerMatch[]>({
+    queryKey: ["customer-phone-lookup", business?.id, debouncedQuery],
+    enabled: !!business?.id && debouncedQuery.replace(/\D/g, "").length >= 3,
+    queryFn: async () => {
+      const raw = debouncedQuery.trim();
+      const normalized = normalizePhone(raw);
+
+      // Build OR filter: match phone or name ilike either the raw or the normalized form
+      // Supabase .or() takes comma-separated filters
+      const filters = [
+        `phone.ilike.%${raw}%`,
+        `phone.ilike.%${normalized}%`,
+        `name.ilike.%${raw}%`,
+      ].join(",");
+
+      const { data, error } = await supabase
+        .from("customers")
+        .select("id, name, phone, address, city")
+        .or(filters)
+        .limit(6);
+
+      if (error) return [];
+      // De-dupe by id (the OR filter can return duplicates)
+      const seen = new Set<string>();
+      const unique: CustomerMatch[] = [];
+      for (const c of data ?? []) {
+        if (seen.has(c.id)) continue;
+        seen.add(c.id);
+        unique.push(c as CustomerMatch);
+      }
+      return unique.slice(0, 5);
+    },
+    staleTime: 30_000,
+  });
+
+  const showSuggestions =
+    suggestionsOpen && suggestions.length > 0 && !order.customer_id;
+
+  const selectCustomer = (c: CustomerMatch) => {
+    setOrder((o) => ({
+      ...o,
+      customer_id: c.id,
+      customer_name: c.name || o.customer_name,
+      customer_phone: c.phone || o.customer_phone,
+      customer_address: c.address || o.customer_address,
+      customer_city: c.city || o.customer_city,
+    }));
+    setPhoneQuery(c.phone || "");
+    setSuggestionsOpen(false);
+  };
+
+  const clearLinkedCustomer = () => {
+    setOrder((o) => ({ ...o, customer_id: null }));
+  };
+
+  const handlePhoneKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveSuggestion((i) => Math.min(i + 1, suggestions.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveSuggestion((i) => Math.max(i - 1, 0));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      selectCustomer(suggestions[activeSuggestion]);
+    } else if (e.key === "Escape") {
+      setSuggestionsOpen(false);
+    }
+  };
+
+  const subtotal = useMemo(
+    () => items.reduce((s, i) => s + i.quantity * i.unit_price, 0),
+    [items],
+  );
   const total = subtotal + Number(order.shipping_fee || 0);
 
   const addItem = () => {
@@ -126,14 +249,112 @@ export function OrderForm({
 
   const removeItem = (idx: number) => setItems((it) => it.filter((_, i) => i !== idx));
 
+  // Build the WhatsApp link based on current form state + items + business language
+  const whatsappLink = (() => {
+    if (!existing || !business || !order.customer_phone || items.length === 0) return null;
+    const message = buildOrderMessage({
+      order: {
+        order_number: order.order_number,
+        customer_name: order.customer_name,
+        customer_phone: order.customer_phone,
+        customer_address: order.customer_address,
+        customer_city: order.customer_city,
+        status: order.status,
+        payment_method: order.payment_method,
+        payment_status: order.payment_status,
+        subtotal,
+        shipping_fee: order.shipping_fee,
+        total,
+        courier: order.courier || null,
+        waybill_number: order.waybill_number || null,
+      },
+      business: {
+        business_name: business.business_name,
+        phone: business.phone,
+      },
+      items: items.map((i) => ({
+        product_name: i.product_name,
+        quantity: i.quantity,
+        unit_price: i.unit_price,
+      })),
+      lang: business.language,
+    });
+    return buildWhatsAppLink(order.customer_phone, message);
+  })();
+ 
+  const whatsappLabel = existing
+    ? whatsappButtonLabel(
+        {
+          order_number: order.order_number,
+          customer_name: order.customer_name,
+          customer_phone: order.customer_phone,
+          customer_address: order.customer_address,
+          customer_city: order.customer_city,
+          status: order.status,
+          payment_method: order.payment_method,
+          payment_status: order.payment_status,
+          subtotal,
+          shipping_fee: order.shipping_fee,
+          total,
+          courier: order.courier || null,
+          waybill_number: order.waybill_number || null,
+        },
+        business?.language ?? "en",
+      ):"";
+
   const save = useMutation({
     mutationFn: async () => {
       if (!business) throw new Error("No business");
       if (!order.customer_name) throw new Error("Customer name required");
       if (items.length === 0) throw new Error("Add at least one item");
 
+      // Resolve / upsert the customer before saving the order so we always have a customer_id.
+      let resolvedCustomerId: string | null = order.customer_id;
+      const phoneDigits = normalizePhone(order.customer_phone);
+
+      if (!resolvedCustomerId && phoneDigits.length >= 7) {
+        // Try to find an existing customer by normalized phone
+        const { data: existingMatches } = await supabase
+          .from("customers")
+          .select("id, phone")
+          .eq("business_id", business.id);
+
+        const matched = (existingMatches ?? []).find(
+          (c) => c.phone && normalizePhone(c.phone) === phoneDigits,
+        );
+
+        if (matched) {
+          resolvedCustomerId = matched.id;
+          // Update the customer with latest info in case address/city changed
+          await supabase
+            .from("customers")
+            .update({
+              name: order.customer_name,
+              address: order.customer_address || null,
+              city: order.customer_city || null,
+            })
+            .eq("id", matched.id);
+        } else {
+          // Create a new customer record
+          const { data: created, error: cErr } = await supabase
+            .from("customers")
+            .insert({
+              business_id: business.id,
+              name: order.customer_name,
+              phone: order.customer_phone || null,
+              address: order.customer_address || null,
+              city: order.customer_city || null,
+            })
+            .select("id")
+            .single();
+          if (cErr) throw cErr;
+          resolvedCustomerId = created.id;
+        }
+      }
+
       const payload = {
         business_id: business.id,
+        customer_id: resolvedCustomerId,
         order_number: order.order_number,
         customer_name: order.customer_name,
         customer_phone: order.customer_phone || null,
@@ -178,6 +399,7 @@ export function OrderForm({
       toast.success(t("saved"));
       qc.invalidateQueries({ queryKey: ["orders"] });
       qc.invalidateQueries({ queryKey: ["dashboard"] });
+      qc.invalidateQueries({ queryKey: ["customers"] });
       onDone();
     },
     onError: (e: Error) => toast.error(e.message),
@@ -211,11 +433,67 @@ export function OrderForm({
               </div>
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label>{t("phone")}</Label>
-                  <Input
-                    value={order.customer_phone}
-                    onChange={(e) => setOrder({ ...order, customer_phone: e.target.value })}
-                  />
+                  <Label className="flex items-center gap-2">
+                    {t("phone")}
+                    {order.customer_id && (
+                      <span className="inline-flex items-center gap-1 text-xs font-normal text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="h-3 w-3" /> Existing customer
+                      </span>
+                    )}
+                  </Label>
+                  <div ref={phoneWrapperRef} className="relative">
+                    <Input
+                      value={order.customer_phone}
+                      placeholder="077..."
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        setOrder({ ...order, customer_phone: v });
+                        setPhoneQuery(v);
+                        setSuggestionsOpen(true);
+                        setActiveSuggestion(0);
+                        if (order.customer_id) clearLinkedCustomer();
+                      }}
+                      onFocus={() => {
+                        if (order.customer_phone && !order.customer_id) {
+                          setPhoneQuery(order.customer_phone);
+                          setSuggestionsOpen(true);
+                        }
+                      }}
+                      onKeyDown={handlePhoneKeyDown}
+                      autoComplete="off"
+                    />
+                    {showSuggestions && (
+                      <div className="absolute z-20 left-0 right-0 mt-1 rounded-lg border border-border bg-popover shadow-lg overflow-hidden">
+                        <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-muted-foreground bg-muted/40">
+                          Existing customers
+                        </div>
+                        {suggestions.map((c, idx) => (
+                          <button
+                            key={c.id}
+                            type="button"
+                            onMouseDown={(e) => {
+                              // Use onMouseDown so it fires before the input blur
+                              e.preventDefault();
+                              selectCustomer(c);
+                            }}
+                            onMouseEnter={() => setActiveSuggestion(idx)}
+                            className={`w-full text-left px-3 py-2 flex items-start gap-2 border-b border-border last:border-0 transition-colors ${
+                              idx === activeSuggestion ? "bg-accent" : "hover:bg-accent/50"
+                            }`}
+                          >
+                            <Phone className="h-3.5 w-3.5 text-muted-foreground mt-1 shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <div className="font-medium truncate">{c.name}</div>
+                              <div className="text-xs text-muted-foreground truncate">
+                                {c.phone}
+                                {c.city ? ` · ${c.city}` : ""}
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label>{t("city")}</Label>
@@ -393,6 +671,14 @@ export function OrderForm({
             </div>
           </div>
 
+          {existing && order.payment_method === "bank_transfer" && business && (
+            <SlipUploadPanel
+              orderId={existing.order.id}
+              businessId={business.id}
+              orderTotal={Number(total)}
+            />
+          )}
+
           <div className="rounded-xl border border-border bg-card p-6 space-y-4">
             <h2 className="font-semibold">Delivery</h2>
             <div className="space-y-2">
@@ -450,6 +736,18 @@ export function OrderForm({
             </div>
           </div>
 
+          {existing && whatsappLink && (
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="block">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full gap-2 border-emerald-500/40 text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-950"
+              >
+                <MessageCircle className="h-4 w-4" /> {whatsappLabel}
+              </Button>
+            </a>
+          )}
+ 
           <div className="flex gap-2">
             <Button variant="outline" className="flex-1" onClick={onDone}>
               {t("cancel")}

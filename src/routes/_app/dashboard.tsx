@@ -1,14 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { ShoppingBag, TrendingUp, Clock, CheckCircle2, Plus } from "lucide-react";
+import {
+  ShoppingBag,
+  TrendingUp,
+  Clock,
+  CheckCircle2,
+  Plus,
+  FileText,
+  ChevronRight,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { formatLKR } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/app/PageHeader";
 import { StatusBadge } from "@/components/app/StatusBadge";
-import { format, startOfDay, startOfMonth, startOfWeek } from "date-fns";
+import { startOfDay, startOfMonth, startOfWeek } from "date-fns";
 
 export const Route = createFileRoute("/_app/dashboard")({
   component: DashboardPage,
@@ -26,6 +34,22 @@ function DashboardPage() {
         .select("id, order_number, customer_name, status, payment_status, total, created_at")
         .order("created_at", { ascending: false });
       return orders ?? [];
+    },
+  });
+
+  // Pending slips count + sum — RLS already filters to current business
+  const { data: pendingSlipsData } = useQuery({
+    queryKey: ["dashboard-pending-slips", business?.id],
+    enabled: !!business?.id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("payment_slips")
+        .select("id, slip_amount")
+        .eq("status", "pending");
+      if (error) return { count: 0, sum: 0 };
+      const count = (data ?? []).length;
+      const sum = (data ?? []).reduce((s, slip) => s + Number(slip.slip_amount), 0);
+      return { count, sum };
     },
   });
 
@@ -50,6 +74,21 @@ function DashboardPage() {
     { icon: CheckCircle2, label: t("delivered"), value: delivered, tint: "text-success" },
   ];
 
+  // Build the action-needed cards list. Add more here as the app grows.
+  const actionCards = [];
+  if (pendingSlipsData && pendingSlipsData.count > 0) {
+    actionCards.push({
+      key: "pending-slips",
+      icon: FileText,
+      title: t("slipsAwaitingVerification"),
+      count: pendingSlipsData.count,
+      meta: `${formatLKR(pendingSlipsData.sum)} ${t("inPendingSlips")}`,
+      to: "/orders" as const,
+      search: { paymentFilter: "pending_verification" as const },
+      tone: "amber",
+    });
+  }
+
   return (
     <div className="container mx-auto p-6 lg:p-10 max-w-7xl">
       <PageHeader
@@ -63,6 +102,40 @@ function DashboardPage() {
           </Link>
         }
       />
+
+      {/* Action needed — only renders if there's at least one card */}
+      {actionCards.length > 0 && (
+        <div className="mb-6">
+          <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
+            {t("actionNeeded")}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {actionCards.map((c) => (
+              <Link
+                key={c.key}
+                to={c.to}
+                search={c.search}
+                className="group rounded-xl border border-amber-500/40 bg-amber-500/5 p-4 flex items-center gap-4 hover:border-amber-500/70 hover:bg-amber-500/10 transition-colors"
+              >
+                <div className="h-11 w-11 rounded-lg bg-amber-500/15 flex items-center justify-center shrink-0">
+                  <c.icon className="h-5 w-5 text-amber-700 dark:text-amber-400" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="font-semibold text-sm flex items-baseline gap-2">
+                    <span className="text-2xl font-bold text-amber-700 dark:text-amber-400 tabular-nums">
+                      {c.count}
+                    </span>
+                    <span>{c.title}</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-0.5">{c.meta}</div>
+                </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-amber-700 dark:group-hover:text-amber-400 shrink-0 transition-colors" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map((s, i) => (
           <motion.div
