@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && npm run fix-index",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "fix-index": "node -e \"const fs=require('fs'); const path='dist/client/_shell.html'; if(fs.existsSync(path)){fs.copyFileSync(path,'dist/client/index.html');console.log('Created index.html from _shell.html')}\""
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
