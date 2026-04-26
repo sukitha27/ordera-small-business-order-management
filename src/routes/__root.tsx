@@ -3,6 +3,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
+import { AlertTriangle, Home, RotateCw } from "lucide-react";
 
 import appCss from "../styles.css?url";
 
@@ -22,6 +23,81 @@ function NotFoundComponent() {
           >
             Go home
           </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Last-resort error UI shown when an unhandled error bubbles up through the
+ * router/component tree. Without this, an uncaught error renders a blank
+ * white page — terrible UX. This page gives the user something to do
+ * (retry / go home / refresh) and exposes the error message in collapsed
+ * form so they can paste it to support if it keeps happening.
+ */
+function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+  // Best-effort log so we can see errors in browser devtools / future
+  // analytics integrations. Production users won't see this in the console
+  // unless they open devtools, which is fine.
+  if (typeof console !== "undefined") {
+    console.error("[Ordera] Unhandled error:", error);
+  }
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md w-full">
+        <div className="rounded-xl border border-border bg-card p-6 sm:p-8 text-center space-y-5">
+          <div className="mx-auto h-14 w-14 rounded-full bg-destructive/10 flex items-center justify-center">
+            <AlertTriangle className="h-7 w-7 text-destructive" />
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-xl font-semibold text-foreground">
+              Something went wrong
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              We hit an unexpected error. This isn't your fault — try refreshing,
+              or contact support if it keeps happening.
+            </p>
+          </div>
+
+          {error?.message && (
+            <details className="text-left">
+              <summary className="text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+                Error details
+              </summary>
+              <pre className="mt-2 rounded-md bg-muted p-3 text-xs text-destructive whitespace-pre-wrap wrap-break-word max-h-32 overflow-auto">
+                {error.message}
+              </pre>
+            </details>
+          )}
+
+          <div className="flex flex-col sm:flex-row gap-2">
+            <button
+              onClick={() => {
+                reset();
+              }}
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              <RotateCw className="h-4 w-4" />
+              Try again
+            </button>
+            <Link
+              to="/"
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+            >
+              <Home className="h-4 w-4" />
+              Go home
+            </Link>
+          </div>
+
+          <button
+            onClick={() => window.location.reload()}
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Or refresh the page
+          </button>
         </div>
       </div>
     </div>
@@ -63,6 +139,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
+  errorComponent: ErrorComponent,
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
