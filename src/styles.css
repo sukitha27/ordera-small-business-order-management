@@ -1,14 +1,51 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 @media print {
-  .no-print { display: none !important; }
-  body { background: white !important; }
-  .print-page { box-shadow: none !important; border: none !important; }
-  @page { margin: 12mm; }
+  /* Hide all app chrome — sidebar, mobile header, action buttons, etc. */
+  .no-print,
+  aside,
+  body > div > div > header,
+  nav {
+    display: none !important;
+  }
+
+  /* Reset page background and remove the muted-bg layout wrapper */
+  body {
+    background: white !important;
+  }
+
+  /* Make main content full-width without the flex layout constraints */
+  body > div {
+    display: block !important;
+  }
+
+  main {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  /* Strip the page-level styling so just the print-page renders */
+  .min-h-screen {
+    background: white !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+
+  /* Print page itself — no shadow/border/max-width constraints */
+  .print-page {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 1cm !important;
+    border-radius: 0 !important;
+  }
+
+  @page {
+    margin: 8mm;
+    size: A4;
+  }
 }
 
 /*

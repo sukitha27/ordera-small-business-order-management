@@ -60,7 +60,7 @@ function AppLayout() {
             path={business?.logo_url}
             alt={business?.business_name}
             size="sm"
-            className="max-w-[180px]"
+            className="max-w-45"
           />
         ) : (
           <>
