@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { BusinessLogo } from "@/components/app/BusinessLogo";
+import { ThemeToggle } from "@/components/app/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_app")({
@@ -60,7 +61,7 @@ function AppLayout() {
             path={business?.logo_url}
             alt={business?.business_name}
             size="sm"
-            className="max-w-45"
+            className="max-w-[180px]"
           />
         ) : (
           <>
@@ -97,6 +98,10 @@ function AppLayout() {
         })}
       </nav>
       <div className="p-3 border-t border-sidebar-border space-y-2">
+        {/* Theme toggle (light/dark/system) */}
+        <ThemeToggle />
+
+        {/* Language toggle */}
         <div className="flex items-center rounded-lg bg-sidebar-accent p-1">
           {(["en", "si"] as const).map((l) => (
             <button
@@ -111,6 +116,7 @@ function AppLayout() {
             </button>
           ))}
         </div>
+
         <Button
           variant="ghost"
           className="w-full justify-start gap-3"

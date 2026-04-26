@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
 import { AlertTriangle, Home, RotateCw } from "lucide-react";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 import appCss from "../styles.css?url";
 
@@ -136,10 +137,15 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
     ],
     scripts: [
+      // Inline theme init — runs before React, prevents flash of light theme
+      // for users who prefer dark mode. Reads localStorage + system preference
+      // and adds .dark class to <html> synchronously.
+      {
+        children: THEME_INIT_SCRIPT,
+      },
       // Cloudflare Web Analytics — privacy-friendly, cookie-less page view tracking.
       // Free unlimited usage as long as the site is on Cloudflare. Loads with `defer`
-      // so it never blocks page render. The data-cf-beacon token is unique to
-      // ordera.veloratech.com.lk; safe to expose since it's a public read-only token.
+      // so it never blocks page render.
       {
         src: "https://static.cloudflareinsights.com/beacon.min.js",
         defer: true,
