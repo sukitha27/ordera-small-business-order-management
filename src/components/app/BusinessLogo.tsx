@@ -17,10 +17,10 @@ interface Props {
 }
 
 const SIZE_CLASSES: Record<NonNullable<Props["size"]>, string> = {
-  sm: "h-8 w-auto max-w-[120px]",
-  md: "h-10 w-auto max-w-[160px]",
-  lg: "h-14 w-auto max-w-[220px]",
-  xl: "h-20 w-auto max-w-[300px]",
+  sm: "h-8 w-auto max-w-[200px]",
+  md: "h-10 w-auto max-w-[260px]",
+  lg: "h-14 w-auto max-w-[340px]",
+  xl: "h-20 w-auto max-w-[420px]",
 };
 
 /**
