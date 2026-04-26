@@ -213,6 +213,7 @@ export const dict = {
     logoTip: "Tip: A logo with transparent background looks best.",
     logoUploaded: "Logo uploaded",
     logoRemoved: "Logo removed",
+    completeCaptcha: "Please complete the security check",
   },
   si: {
     appName: "Ordera",
@@ -426,6 +427,7 @@ export const dict = {
     logoTip: "ඉඟිය: transparent background සහිත logo එක හොඳම විදිහට පෙනේ.",
     logoUploaded: "Logo upload කෙරුවා",
     logoRemoved: "Logo ඉවත් කෙරුවා",
+    completeCaptcha: "ආරක්ෂණ පරීක්ෂාව සම්පූර්ණ කරන්න",
   },
 } as const;
 

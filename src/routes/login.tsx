@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
+import { Captcha } from "@/components/app/Captcha";
 import { toast } from "sonner";
+
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -17,13 +20,31 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  // Captcha token expires after ~5 min; we ask the user to re-verify if so.
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (TURNSTILE_SITE_KEY && !captchaToken) {
+      return toast.error(t("completeCaptcha"));
+    }
+
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+      options: {
+        captchaToken: captchaToken ?? undefined,
+      },
+    });
     setLoading(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      // Captcha token is single-use — clear it on any failure so the user
+      // gets a fresh challenge for their next attempt.
+      setCaptchaToken(null);
+      return toast.error(error.message);
+    }
     toast.success(t("welcome"));
     navigate({ to: "/dashboard" });
   };
@@ -75,7 +96,21 @@ function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
+
+          {TURNSTILE_SITE_KEY && (
+            <Captcha
+              siteKey={TURNSTILE_SITE_KEY}
+              onVerify={setCaptchaToken}
+              onExpire={() => setCaptchaToken(null)}
+              onError={() => setCaptchaToken(null)}
+            />
+          )}
+
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={loading || (!!TURNSTILE_SITE_KEY && !captchaToken)}
+          >
             {loading ? "..." : t("signIn")}
           </Button>
           <p className="text-sm text-center text-muted-foreground">

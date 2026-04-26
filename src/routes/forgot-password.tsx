@@ -1,28 +1,48 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
+import { Captcha } from "@/components/app/Captcha";
 import { toast } from "sonner";
+
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
 
 export const Route = createFileRoute("/forgot-password")({
   component: ForgotPasswordPage,
 });
 
 function ForgotPasswordPage() {
-  const { t, sendPasswordResetEmail } = useAuth();
+  const { t } = useAuth();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (TURNSTILE_SITE_KEY && !captchaToken) {
+      return toast.error(t("completeCaptcha"));
+    }
+
     setLoading(true);
-    const { error } = await sendPasswordResetEmail(email);
+    // Note: we call supabase.auth.resetPasswordForEmail directly here rather
+    // than through AuthContext's sendPasswordResetEmail() helper, because the
+    // helper doesn't accept a captcha token. Calling Supabase directly with
+    // the captchaToken option is cleaner than refactoring AuthContext.
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+      captchaToken: captchaToken ?? undefined,
+    });
     setLoading(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      setCaptchaToken(null);
+      return toast.error(error.message);
+    }
     setSent(true);
   };
 
@@ -60,6 +80,7 @@ function ForgotPasswordPage() {
                 onClick={() => {
                   setSent(false);
                   setEmail("");
+                  setCaptchaToken(null);
                 }}
                 className="w-full"
               >
@@ -97,7 +118,21 @@ function ForgotPasswordPage() {
                 autoFocus
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+
+            {TURNSTILE_SITE_KEY && (
+              <Captcha
+                siteKey={TURNSTILE_SITE_KEY}
+                onVerify={setCaptchaToken}
+                onExpire={() => setCaptchaToken(null)}
+                onError={() => setCaptchaToken(null)}
+              />
+            )}
+
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading || (!!TURNSTILE_SITE_KEY && !captchaToken)}
+            >
               {loading ? "..." : t("sendResetLink")}
             </Button>
             <Link
