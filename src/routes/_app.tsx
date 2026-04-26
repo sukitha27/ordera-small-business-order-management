@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { BusinessLogo } from "@/components/app/BusinessLogo";
 import { ThemeToggle } from "@/components/app/ThemeToggle";
 import { cn } from "@/lib/utils";
-
+import { DeletionBanner } from "@/components/app/DeletionBanner";
 export const Route = createFileRoute("/_app")({
   component: AppLayout,
 });
@@ -162,6 +162,7 @@ function AppLayout() {
           </div>
         </header>
         <main className="flex-1 overflow-y-auto">
+          <DeletionBanner />
           <Outlet />
         </main>
       </div>

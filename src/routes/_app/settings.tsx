@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PageHeader } from "@/components/app/PageHeader";
 import { LogoUpload } from "@/components/app/LogoUpload";
+import { DeleteAccountSection } from "@/components/app/DeleteAccountSection";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -143,7 +144,7 @@ function SettingsPage() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-border bg-card p-6">
+      <div className="rounded-xl border border-border bg-card p-6 mb-6">
         <h2 className="font-semibold mb-1">{t("changePassword")}</h2>
         <p className="text-xs text-muted-foreground mb-4">{t("changePasswordDesc")}</p>
         <div className="space-y-4 max-w-md">
@@ -188,6 +189,9 @@ function SettingsPage() {
           </div>
         </div>
       </div>
+
+      {/* Danger zone — account deletion. 30-day soft delete with cancel option. */}
+      <DeleteAccountSection />
     </div>
   );
 }
