@@ -135,6 +135,17 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap",
       },
     ],
+    scripts: [
+      // Cloudflare Web Analytics — privacy-friendly, cookie-less page view tracking.
+      // Free unlimited usage as long as the site is on Cloudflare. Loads with `defer`
+      // so it never blocks page render. The data-cf-beacon token is unique to
+      // ordera.veloratech.com.lk; safe to expose since it's a public read-only token.
+      {
+        src: "https://static.cloudflareinsights.com/beacon.min.js",
+        defer: true,
+        "data-cf-beacon": '{"token": "3675dded811c4c52bdb629896971c7d5"}',
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
