@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { BusinessLogo } from "@/components/app/BusinessLogo";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_app")({
@@ -48,11 +49,25 @@ function AppLayout() {
     ...(isAdmin ? [{ to: "/admin", icon: Shield, label: "Admin" }] : []),
   ] as const;
 
+  const hasLogo = !!business?.logo_url;
+
   const Sidebar = (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col h-full">
+      {/* Header — show business logo if uploaded, else fall back to Ordera mark */}
       <Link to="/dashboard" className="flex items-center gap-2 px-6 h-16 border-b border-sidebar-border">
-        <div className="h-8 w-8 rounded-lg" style={{ background: "var(--gradient-primary)" }} />
-        <span className="text-xl font-bold tracking-tight">Ordera</span>
+        {hasLogo ? (
+          <BusinessLogo
+            path={business?.logo_url}
+            alt={business?.business_name}
+            size="sm"
+            className="max-w-[180px]"
+          />
+        ) : (
+          <>
+            <div className="h-8 w-8 rounded-lg" style={{ background: "var(--gradient-primary)" }} />
+            <span className="text-xl font-bold tracking-tight">Ordera</span>
+          </>
+        )}
       </Link>
       <div className="px-4 py-4 border-b border-sidebar-border">
         <div className="text-xs uppercase text-muted-foreground tracking-wider">
@@ -125,8 +140,19 @@ function AppLayout() {
             <Menu className="h-5 w-5" />
           </Button>
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded" style={{ background: "var(--gradient-primary)" }} />
-            <span className="font-bold">Ordera</span>
+            {hasLogo ? (
+              <BusinessLogo
+                path={business?.logo_url}
+                alt={business?.business_name}
+                size="sm"
+                className="max-w-[140px]"
+              />
+            ) : (
+              <>
+                <div className="h-6 w-6 rounded" style={{ background: "var(--gradient-primary)" }} />
+                <span className="font-bold">Ordera</span>
+              </>
+            )}
           </div>
         </header>
         <main className="flex-1 overflow-y-auto">

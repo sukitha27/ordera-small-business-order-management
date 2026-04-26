@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PageHeader } from "@/components/app/PageHeader";
+import { LogoUpload } from "@/components/app/LogoUpload";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -100,6 +101,13 @@ function SettingsPage() {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Branding — logo appears on invoice, waybill, and dashboard sidebar */}
+      <div className="rounded-xl border border-border bg-card p-6 mb-6">
+        <h2 className="font-semibold mb-1">{t("branding")}</h2>
+        <p className="text-xs text-muted-foreground mb-4">{t("brandingDesc")}</p>
+        <LogoUpload />
       </div>
 
       <div className="rounded-xl border border-border bg-card p-6 mb-6">

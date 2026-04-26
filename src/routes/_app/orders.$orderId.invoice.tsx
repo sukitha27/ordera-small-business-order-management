@@ -5,6 +5,7 @@ import { Printer, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { BusinessLogo } from "@/components/app/BusinessLogo";
 import { formatLKR } from "@/lib/i18n";
 import { format } from "date-fns";
 
@@ -50,14 +51,26 @@ function InvoicePage() {
 
       <div className="print-page max-w-3xl mx-auto bg-white text-black rounded-xl shadow-sm p-10 border border-border">
         <div className="flex justify-between items-start pb-6 border-b border-gray-200">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">{business?.business_name || "Business"}</h1>
-            {business?.owner_name && <div className="text-sm text-gray-600">{business.owner_name}</div>}
-            {business?.address && <div className="text-sm text-gray-600">{business.address}</div>}
-            {business?.city && <div className="text-sm text-gray-600">{business.city}</div>}
-            {business?.phone && <div className="text-sm text-gray-600">Tel: {business.phone}</div>}
+          <div className="flex items-start gap-4 min-w-0">
+            {/* Logo on the left if uploaded — sized to match the heading height */}
+            {business?.logo_url && (
+              <div className="shrink-0 pt-1">
+                <BusinessLogo
+                  path={business.logo_url}
+                  alt={business.business_name}
+                  size="lg"
+                />
+              </div>
+            )}
+            <div className="min-w-0">
+              <h1 className="text-2xl font-bold tracking-tight">{business?.business_name || "Business"}</h1>
+              {business?.owner_name && <div className="text-sm text-gray-600">{business.owner_name}</div>}
+              {business?.address && <div className="text-sm text-gray-600">{business.address}</div>}
+              {business?.city && <div className="text-sm text-gray-600">{business.city}</div>}
+              {business?.phone && <div className="text-sm text-gray-600">Tel: {business.phone}</div>}
+            </div>
           </div>
-          <div className="text-right">
+          <div className="text-right shrink-0 ml-4">
             <div className="text-3xl font-bold tracking-tight">INVOICE</div>
             <div className="text-sm text-gray-600 mt-1">#{o.order_number}</div>
             <div className="text-sm text-gray-600">{format(new Date(o.created_at), "PPP")}</div>

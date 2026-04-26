@@ -5,6 +5,7 @@ import { Printer, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { BusinessLogo } from "@/components/app/BusinessLogo";
 import { formatLKR } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_app/orders/$orderId/waybill")({
@@ -57,6 +58,16 @@ function WaybillPage() {
         <div className="grid grid-cols-2 divide-x-2 divide-black">
           <div className="p-5">
             <div className="text-[10px] uppercase tracking-widest text-gray-600 mb-2">From</div>
+            {/* Logo above business info on the from-side; tight sizing for shipping label */}
+            {business?.logo_url && (
+              <div className="mb-2">
+                <BusinessLogo
+                  path={business.logo_url}
+                  alt={business.business_name}
+                  size="md"
+                />
+              </div>
+            )}
             <div className="font-bold">{business?.business_name || "—"}</div>
             {business?.owner_name && <div className="text-sm">{business.owner_name}</div>}
             {business?.address && <div className="text-sm">{business.address}</div>}
