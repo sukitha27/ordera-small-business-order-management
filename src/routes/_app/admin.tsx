@@ -38,6 +38,15 @@ function AdminPage() {
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
 
+  // Redirect non-admins to dashboard. We wait until auth is finished loading
+  // so we don't kick out a user during the brief moment isAdmin is still
+  // resolving on first mount.
+  useEffect(() => {
+    if (!loading && !isAdmin) {
+      navigate({ to: "/dashboard" });
+    }
+  }, [loading, isAdmin, navigate]);
+
   const load = async () => {
     setBusy(true);
     const [biz, ord, roles] = await Promise.all([
@@ -58,15 +67,16 @@ function AdminPage() {
     setBusy(false);
   };
 
+  // Only fetch admin data once we've confirmed the user IS an admin.
+  // This prevents non-admins (during the brief redirect window) from triggering
+  // failed queries that would just be RLS-blocked anyway.
   useEffect(() => {
     if (isAdmin) load();
   }, [isAdmin]);
 
-  useEffect(() => {
-    if (!loading && !isAdmin) navigate({ to: "/dashboard" });
-  }, [loading, isAdmin, navigate]);
-
-  if (!isAdmin) return null;
+  // While auth is still resolving OR the user is not admin, render nothing.
+  // The useEffect above will redirect non-admins shortly.
+  if (loading || !isAdmin) return null;
 
   const filtered = rows.filter((r) => {
     const s = q.toLowerCase();
