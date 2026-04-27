@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { PageHeader } from "@/components/app/PageHeader";
 import { LogoUpload } from "@/components/app/LogoUpload";
 import { DeleteAccountSection } from "@/components/app/DeleteAccountSection";
+import { PublicFormSettings } from "@/components/app/PublicFormSettings";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -110,6 +111,8 @@ function SettingsPage() {
         <p className="text-xs text-muted-foreground mb-4">{t("brandingDesc")}</p>
         <LogoUpload />
       </div>
+
+      <PublicFormSettings />
 
       <div className="rounded-xl border border-border bg-card p-6 mb-6">
         <h2 className="font-semibold mb-4">{t("profile")}</h2>

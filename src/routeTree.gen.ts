@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OrderSlugRouteImport } from './routes/order.$slug'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppReportsRouteImport } from './routes/_app/reports'
 import { Route as AppProductsRouteImport } from './routes/_app/products'
@@ -56,6 +57,11 @@ const AppRoute = AppRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderSlugRoute = OrderSlugRouteImport.update({
+  id: '/order/$slug',
+  path: '/order/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppSettingsRoute = AppSettingsRouteImport.update({
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/products': typeof AppProductsRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
+  '/order/$slug': typeof OrderSlugRoute
   '/customers/$customerId': typeof AppCustomersCustomerIdRoute
   '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/products': typeof AppProductsRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
+  '/order/$slug': typeof OrderSlugRoute
   '/customers/$customerId': typeof AppCustomersCustomerIdRoute
   '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
@@ -178,6 +186,7 @@ export interface FileRoutesById {
   '/_app/products': typeof AppProductsRoute
   '/_app/reports': typeof AppReportsRoute
   '/_app/settings': typeof AppSettingsRoute
+  '/order/$slug': typeof OrderSlugRoute
   '/_app/customers/$customerId': typeof AppCustomersCustomerIdRoute
   '/_app/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/_app/orders/new': typeof AppOrdersNewRoute
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
     | '/products'
     | '/reports'
     | '/settings'
+    | '/order/$slug'
     | '/customers/$customerId'
     | '/orders/$orderId'
     | '/orders/new'
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/products'
     | '/reports'
     | '/settings'
+    | '/order/$slug'
     | '/customers/$customerId'
     | '/orders/$orderId'
     | '/orders/new'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/_app/products'
     | '/_app/reports'
     | '/_app/settings'
+    | '/order/$slug'
     | '/_app/customers/$customerId'
     | '/_app/orders/$orderId'
     | '/_app/orders/new'
@@ -257,6 +269,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
+  OrderSlugRoute: typeof OrderSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -301,6 +314,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order/$slug': {
+      id: '/order/$slug'
+      path: '/order/$slug'
+      fullPath: '/order/$slug'
+      preLoaderRoute: typeof OrderSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/settings': {
@@ -457,6 +477,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
+  OrderSlugRoute: OrderSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
