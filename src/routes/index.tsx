@@ -31,6 +31,7 @@ export const Route = createFileRoute("/")({
 function LandingPage() {
   const { user, t, loading, lang, setLang } = useAuth();
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Redirect authenticated users to dashboard
   if (!loading && user) return <Navigate to="/dashboard" />;
@@ -169,79 +170,152 @@ function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ==================== NAVIGATION ==================== */}
-      <header className="border-b border-border/60 backdrop-blur sticky top-0 z-30 bg-background/80">
-        <div className="container mx-auto flex items-center justify-between px-6 py-4">
-          <Link to="/" className="flex items-center gap-2">
-            {/* Light mode logo */}
-            <img
-              src="/ordera-logo.svg"
-              alt="Ordera"
-              className="h-8 w-auto light-only"
-            />
-            {/* Dark mode logo */}
-            <img
-              src="/logo-lockup-inverse.svg"
-              alt="Ordera"
-              className="h-8 w-auto dark-only"
-            />
-          </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <a
-              href="#features"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {t("features")}
-            </a>
-            <a
-              href="#pricing"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {t("pricing")}
-            </a>
-            <a
-              href="#testimonials"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Stories
-            </a>
-          </nav>
-  <div className="flex items-center gap-3">
-    {/* Language Toggle */}
-    <div className="flex items-center rounded-lg border border-border bg-card overflow-hidden">
-      <button
-        onClick={() => setLang("en")}
-        className={`px-2.5 py-1.5 text-xs font-medium transition-colors ${
-          lang === "en"
-            ? "bg-primary text-primary-foreground"
-            : "text-muted-foreground hover:text-foreground"
-        }`}
-      >
-        EN
-      </button>
-      <button
-        onClick={() => setLang("si")}
-        className={`px-2.5 py-1.5 text-xs font-medium transition-colors ${
-          lang === "si"
-            ? "bg-primary text-primary-foreground"
-            : "text-muted-foreground hover:text-foreground"
-        }`}
-      >
-        සිං
-      </button>
+<header className="border-b border-border/60 backdrop-blur sticky top-0 z-30 bg-background/80">
+  <div className="container mx-auto flex items-center justify-between px-4 md:px-6 py-3">
+    {/* Logo */}
+    <Link to="/" className="flex-shrink-0">
+      <img
+        src="/ordera-logo.svg"
+        alt="Ordera"
+        className="h-7 md:h-8 w-auto light-only"
+      />
+      <img
+        src="/logo-lockup-inverse.svg"
+        alt="Ordera"
+        className="h-7 md:h-8 w-auto dark-only"
+      />
+    </Link>
+
+    {/* Desktop Navigation */}
+    <nav className="hidden lg:flex items-center gap-8">
+      <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+        {t("features")}
+      </a>
+      <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+        {t("pricing")}
+      </a>
+      <a href="#testimonials" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+        Stories
+      </a>
+    </nav>
+
+    {/* Desktop Controls */}
+    <div className="hidden lg:flex items-center gap-3">
+      <div className="flex items-center rounded-lg border border-border bg-card overflow-hidden">
+        <button
+          onClick={() => setLang("en")}
+          className={`px-2.5 py-1.5 text-xs font-medium transition-colors ${
+            lang === "en" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          EN
+        </button>
+        <button
+          onClick={() => setLang("si")}
+          className={`px-2.5 py-1.5 text-xs font-medium transition-colors ${
+            lang === "si" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          සිං
+        </button>
+      </div>
+      <LandingThemeToggle />
+      <Link to="/login">
+        <Button variant="ghost" size="sm">{t("signIn")}</Button>
+      </Link>
+      <Link to="/signup">
+        <Button size="sm">{t("getStarted")}</Button>
+      </Link>
     </div>
 
-    {/* Theme Toggle */}
-  <LandingThemeToggle />
+    {/* Mobile Controls */}
+    <div className="flex lg:hidden items-center gap-2">
+      <LandingThemeToggle />
+      <Link to="/signup">
+        <Button size="sm" className="text-xs h-8 px-3">{t("getStarted")}</Button>
+      </Link>
+      <button
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className="p-2 rounded-lg hover:bg-muted transition-colors"
+        aria-label="Toggle menu"
+      >
+        {isMobileMenuOpen ? (
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        ) : (
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        )}
+      </button>
+    </div>
+  </div>
 
-    <Link to="/login">
-              <Button variant="ghost">{t("signIn")}</Button>
-            </Link>
-            <Link to="/signup">
-              <Button>{t("getStarted")}</Button>
-            </Link>
+  {/* Mobile Menu */}
+  {isMobileMenuOpen && (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="lg:hidden border-t border-border bg-card"
+    >
+      <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+        {/* Nav Links */}
+        <nav className="flex flex-col gap-1">
+          <a
+            href="#features"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors"
+          >
+            {t("features")}
+          </a>
+          <a
+            href="#pricing"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors"
+          >
+            {t("pricing")}
+          </a>
+          <a
+            href="#testimonials"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors"
+          >
+            Stories
+          </a>
+        </nav>
+
+        <div className="h-px bg-border" />
+
+        {/* Language + Auth */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center rounded-lg border border-border bg-background overflow-hidden">
+            <button
+              onClick={() => setLang("en")}
+              className={`px-3 py-1.5 text-xs font-medium transition-colors ${
+                lang === "en" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+              }`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLang("si")}
+              className={`px-3 py-1.5 text-xs font-medium transition-colors ${
+                lang === "si" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+              }`}
+            >
+              සිං
+            </button>
           </div>
+          <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+            <Button variant="ghost" size="sm">{t("signIn")}</Button>
+          </Link>
         </div>
-      </header>
+      </div>
+    </motion.div>
+  )}
+</header>
 
       {/* ==================== HERO SECTION ==================== */}
       <section className="container mx-auto px-6 pt-20 pb-24">
