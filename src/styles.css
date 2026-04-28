@@ -219,5 +219,39 @@
 .dark .dark-only {
   display: block;
 }
+
+/* Animated gradient border for Final CTA */
+.cta-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    270deg,
+    oklch(0.55 0.20 264),
+    oklch(0.45 0.22 295),
+    oklch(0.55 0.20 264),
+    oklch(0.45 0.22 295)
+  );
+  background-size: 300% 300%;
+  animation: border-glow 4s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes border-glow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 }
 
