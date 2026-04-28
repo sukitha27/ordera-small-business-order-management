@@ -23,6 +23,7 @@ import { FeatureSection } from "@/components/landing/FeatureSection";
 import { TestimonialCard } from "@/components/landing/TestimonialCard";
 import { PricingCard } from "@/components/landing/PricingCard";
 import { LandingThemeToggle } from "@/components/landing/LandingThemeToggle";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -654,48 +655,55 @@ function LandingPage() {
       </section>
 
       {/* ==================== FINAL CTA ==================== */}
-<section className="container mx-auto px-6 py-20">
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="rounded-3xl p-12 md:p-16 text-center max-w-4xl mx-auto bg-primary cta-card"
-  >
-    {/* Dark bg in light mode → show inverse logo */}
-    <img
-      src="/logo-lockup-inverse.svg"
-      alt="Ordera"
-      className="h-10 w-auto mx-auto mb-6 light-only"
-    />
-    {/* Light bg in dark mode → show regular logo */}
-    <img
-      src="/ordera-logo.svg"
-      alt="Ordera"
-      className="h-10 w-auto mx-auto mb-6 dark-only"
-    />
-    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary-foreground">
-      {t("finalHeadline")}
-    </h2>
-    <p className="text-lg text-primary-foreground/90 mb-8 max-w-xl mx-auto">
-      {t("finalSubheadline")}
-    </p>
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-      <Link to="/signup">
-        <Button size="lg" variant="secondary" className="gap-2">
-          {t("startTrial")} <ArrowRight className="h-4 w-4" />
-        </Button>
-      </Link>
-      <button className="inline-flex items-center gap-2 text-primary-foreground/90 hover:text-primary-foreground transition-colors text-sm font-medium">
-        <Phone className="h-4 w-4" /> {t("bookDemo")}
-      </button>
-    </div>
-    <p className="text-sm text-primary-foreground/70 mt-6">
-      {t("joinBusinesses")}
-    </p>
-  </motion.div>
-</section>
+      <section className="container mx-auto px-6 py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="relative rounded-3xl p-12 md:p-16 text-center max-w-4xl mx-auto bg-primary overflow-hidden"
+        >
+          {/* Dark bg in light mode → show inverse logo */}
+          <img
+            src="/logo-lockup-inverse.svg"
+            alt="Ordera"
+            className="h-10 w-auto mx-auto mb-6 relative z-10 light-only"
+          />
+          {/* Light bg in dark mode → show regular logo */}
+          <img
+            src="/ordera-logo.svg"
+            alt="Ordera"
+            className="h-10 w-auto mx-auto mb-6 relative z-10 dark-only"
+          />
+          <h2 className="relative z-10 text-3xl md:text-4xl font-bold mb-4 text-primary-foreground">
+            {t("finalHeadline")}
+          </h2>
+          <p className="relative z-10 text-lg text-primary-foreground/90 mb-8 max-w-xl mx-auto">
+            {t("finalSubheadline")}
+          </p>
+          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link to="/signup">
+              <Button size="lg" variant="secondary" className="gap-2">
+                {t("startTrial")} <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+            <button className="inline-flex items-center gap-2 text-primary-foreground/90 hover:text-primary-foreground transition-colors text-sm font-medium">
+              <Phone className="h-4 w-4" /> {t("bookDemo")}
+            </button>
+          </div>
+          <p className="relative z-10 text-sm text-primary-foreground/70 mt-6">
+            {t("joinBusinesses")}
+          </p>
 
+          <BorderBeam 
+  duration={5} 
+  size={250}
+  borderWidth={2}
+  colorFrom="#fbbf24"
+  colorTo="#ef4444"
+/>
+        </motion.div>
+      </section>
       {/* ==================== FOOTER ==================== */}
       <footer className="border-t border-border mt-20 bg-card/50">
         <div className="container mx-auto px-6 py-12">
