@@ -9,14 +9,17 @@ interface Props {
   orderId: string;
   orderNumber: string;
   customerPhone: string | null;
-  /** How many other inquiries from the same phone are currently pending */
   duplicateCount?: number;
 }
 
 /**
- * Banner + actions shown on an order detail page when the order is an
- * inquiry from the public form. The merchant either confirms it (becomes a
- * real order) or rejects it as fake (status → cancelled, note appended).
+ * Banner + actions on an order detail page when the order is an inquiry.
+ *
+ * Confirm: is_inquiry=false → moves to main Orders list
+ * Reject:  status='cancelled' but KEEPS is_inquiry=true → stays in
+ *          inquiries inbox (Rejected tab) and does NOT pollute the main
+ *          Orders list. This is the cleaner mental model — once it's an
+ *          inquiry, it always stays an inquiry from the system's POV.
  */
 export function InquiryActions({ orderId, customerPhone, duplicateCount = 0 }: Props) {
   const { t } = useAuth();
@@ -39,11 +42,11 @@ export function InquiryActions({ orderId, customerPhone, duplicateCount = 0 }: P
 
   const reject = useMutation({
     mutationFn: async () => {
-      // We use a SECURITY DEFINER-style update: cancel + flag
+      // Keep is_inquiry=true so the row stays in /inquiries (Rejected tab)
+      // and is filtered OUT of the main /orders list.
       const { error } = await supabase
         .from("orders")
         .update({
-          is_inquiry: false,
           status: "cancelled",
           notes: "[Rejected as fake inquiry]",
         })
@@ -65,13 +68,12 @@ export function InquiryActions({ orderId, customerPhone, duplicateCount = 0 }: P
           <div className="font-semibold text-amber-900 dark:text-amber-200">
             {t("inquiryFromPublicForm")}
           </div>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {t("inquiryReviewDesc")}
-          </p>
+          <p className="text-sm text-muted-foreground mt-0.5">{t("inquiryReviewDesc")}</p>
 
           {duplicateCount > 0 && (
             <div className="mt-2 inline-flex items-center gap-1.5 rounded-md bg-destructive/10 text-destructive px-2 py-1 text-xs font-medium">
-              ⚠️ {customerPhone} has {duplicateCount} other open inquir{duplicateCount === 1 ? "y" : "ies"}
+              ⚠️ {customerPhone} has {duplicateCount} other open inquir
+              {duplicateCount === 1 ? "y" : "ies"}
             </div>
           )}
 

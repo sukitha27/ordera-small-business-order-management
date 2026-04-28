@@ -205,4 +205,19 @@
   :lang(si), .font-sinhala {
     font-family: 'Noto Sans Sinhala', 'Inter', sans-serif;
   }
+
+  .light-only {
+  display: block;
 }
+.dark-only {
+  display: none;
+}
+
+.dark .light-only {
+  display: none;
+}
+.dark .dark-only {
+  display: block;
+}
+}
+

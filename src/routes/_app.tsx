@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet, Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -9,14 +10,17 @@ import {
   LogOut,
   Menu,
   Shield,
+  Inbox,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { BusinessLogo } from "@/components/app/BusinessLogo";
 import { ThemeToggle } from "@/components/app/ThemeToggle";
 import { cn } from "@/lib/utils";
 import { DeletionBanner } from "@/components/app/DeletionBanner";
+
 export const Route = createFileRoute("/_app")({
   component: AppLayout,
 });
@@ -31,6 +35,25 @@ function AppLayout() {
     if (!loading && !user) navigate({ to: "/login" });
   }, [loading, user, navigate]);
 
+  // Pending-inquiries count for the sidebar badge.
+  // Lightweight HEAD query — only counts rows, doesn't pull data.
+  const { data: pendingInquiriesCount = 0 } = useQuery({
+    queryKey: ["sidebar-inquiries-count", business?.id],
+    enabled: !!business?.id,
+    queryFn: async () => {
+      // Only count NEEDS-REVIEW inquiries: is_inquiry=true AND not already cancelled.
+      // Rejected inquiries (status='cancelled') stay as is_inquiry=true so they
+      // appear in the Rejected tab, but they shouldn't bump the sidebar badge.
+      const { count } = await supabase
+        .from("orders")
+        .select("id", { count: "exact", head: true })
+        .eq("is_inquiry", true)
+        .neq("status", "cancelled");
+      return count ?? 0;
+    },
+    refetchInterval: 30_000,
+  });
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -41,13 +64,19 @@ function AppLayout() {
   if (!user) return null;
 
   const nav = [
-    { to: "/dashboard", icon: LayoutDashboard, label: t("dashboard") },
-    { to: "/orders", icon: ShoppingBag, label: t("orders") },
-    { to: "/products", icon: Package, label: t("products") },
-    { to: "/customers", icon: Users, label: t("customers") },
-    { to: "/reports", icon: BarChart3, label: t("reports") },
-    { to: "/settings", icon: Settings, label: t("settings") },
-    ...(isAdmin ? [{ to: "/admin", icon: Shield, label: "Admin" }] : []),
+    { to: "/dashboard", icon: LayoutDashboard, label: t("dashboard"), badge: 0 },
+    {
+      to: "/inquiries",
+      icon: Inbox,
+      label: t("inquiries"),
+      badge: pendingInquiriesCount,
+    },
+    { to: "/orders", icon: ShoppingBag, label: t("orders"), badge: 0 },
+    { to: "/products", icon: Package, label: t("products"), badge: 0 },
+    { to: "/customers", icon: Users, label: t("customers"), badge: 0 },
+    { to: "/reports", icon: BarChart3, label: t("reports"), badge: 0 },
+    { to: "/settings", icon: Settings, label: t("settings"), badge: 0 },
+    ...(isAdmin ? [{ to: "/admin", icon: Shield, label: "Admin", badge: 0 }] : []),
   ] as const;
 
   const hasLogo = !!business?.logo_url;
@@ -61,7 +90,7 @@ function AppLayout() {
             path={business?.logo_url}
             alt={business?.business_name}
             size="sm"
-            className="max-w-[180px]"
+            className="max-w-45"
           />
         ) : (
           <>
@@ -79,6 +108,7 @@ function AppLayout() {
       <nav className="flex-1 px-3 py-4 space-y-1">
         {nav.map((item) => {
           const active = location.pathname.startsWith(item.to);
+          const showBadge = item.badge > 0;
           return (
             <Link
               key={item.to}
@@ -92,7 +122,22 @@ function AppLayout() {
               )}
             >
               <item.icon className="h-4 w-4" />
-              {item.label}
+              <span className="flex-1">{item.label}</span>
+              {showBadge && (
+                <span
+                  className={cn(
+                    "min-w-5 h-5 px-1.5 inline-flex items-center justify-center rounded-full text-[11px] font-semibold tabular-nums",
+                    // Use destructive (red) styling so unattended inquiries
+                    // are visually impossible to ignore. Active nav uses
+                    // a contrasting badge against the colored background.
+                    active
+                      ? "bg-sidebar text-sidebar-foreground"
+                      : "bg-destructive text-destructive-foreground",
+                  )}
+                >
+                  {item.badge > 99 ? "99+" : item.badge}
+                </span>
+              )}
             </Link>
           );
         })}
@@ -151,7 +196,7 @@ function AppLayout() {
                 path={business?.logo_url}
                 alt={business?.business_name}
                 size="sm"
-                className="max-w-[140px]"
+                className="max-w-35"
               />
             ) : (
               <>

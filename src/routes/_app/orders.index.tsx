@@ -57,6 +57,9 @@ function OrdersPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.paymentFilter, searchParams.statusFilter]);
 
+  // Inquiries from the public form live in their own dedicated /inquiries
+  // page. Filter them out here so the main Orders list shows confirmed
+  // orders only — keeps the mental model clean.
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["orders", business?.id],
     enabled: !!business?.id,
@@ -64,6 +67,7 @@ function OrdersPage() {
       const { data } = await supabase
         .from("orders")
         .select("*")
+        .eq("is_inquiry", false)
         .order("created_at", { ascending: false });
       return data ?? [];
     },

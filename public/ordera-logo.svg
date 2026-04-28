@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" fill="none">
+  
+  <path d="M32 4C16.536 4 4 16.536 4 32s12.536 28 28 28 28-12.536 28-28c0-3.59-.676-7.022-1.906-10.176L42.5 37.418a4 4 0 0 1-5.746.103l-7.5-7.5a4 4 0 1 1 5.657-5.657l4.614 4.614L53.73 13.77C48.61 7.798 40.746 4 32 4Z" fill="#0F6E5C"></path>
+  
+  <text x="74" y="44" font-family="&#39;Space Grotesk&#39;, system-ui, sans-serif" font-size="32" font-weight="700" letter-spacing="-0.02em" fill="#1C1A12">ordera</text>
+  
+  <circle cx="164" cy="18" r="3.2" fill="#F4A621"></circle>
+</svg>

@@ -92,52 +92,63 @@ export const dict = {
     lkr: "LKR",
     addFirstOrder: "Add your first order",
     landingFeat1Title: "All your orders, one place",
-    landingFeat1Desc: "Pending → Confirmed → Packed → Shipped → Delivered. Always know what's next.",
+    landingFeat1Desc:
+      "Pending → Confirmed → Packed → Shipped → Delivered. Always know what's next.",
     landingFeat2Title: "COD & bank transfer ready",
-    landingFeat2Desc: "Mark payment status, track collections, log bank slips — built for Sri Lankan commerce.",
+    landingFeat2Desc:
+      "Mark payment status, track collections, log bank slips — built for Sri Lankan commerce.",
     landingFeat3Title: "Courier dispatch built-in",
-    landingFeat3Desc: "Pronto, Domex, Koombiyo, Fardar — assign couriers and track waybills from each order.",
+    landingFeat3Desc:
+      "Pronto, Domex, Koombiyo, Fardar — assign couriers and track waybills from each order.",
     landingFeat4Title: "Dashboard that talks money",
-    landingFeat4Desc: "Revenue in LKR, top products, daily and monthly trends. Decisions, not spreadsheets.",
+    landingFeat4Desc:
+      "Revenue in LKR, top products, daily and monthly trends. Decisions, not spreadsheets.",
     features: "Features",
     pricing: "Free during beta",
     footerLine: "Made for Sri Lankan online businesses.",
     forgotPassword: "Forgot password?",
     resetPassword: "Reset password",
-    resetPasswordDesc: "Enter your email and we'll send you a link to reset your password.",
+    resetPasswordDesc:
+      "Enter your email and we'll send you a link to reset your password.",
     sendResetLink: "Send reset link",
     checkEmail: "Check your email",
     resetLinkSent: "We sent a password reset link to",
     sendAgain: "Send again",
     backToLogin: "Back to login",
     setNewPassword: "Set a new password",
-    setNewPasswordDesc: "Choose a strong password you haven't used before.",
+    setNewPasswordDesc:
+      "Choose a strong password you haven't used before.",
     newPassword: "New password",
     confirmPassword: "Confirm password",
     changePassword: "Change password",
-    changePasswordDesc: "Enter your current password to set a new one.",
+    changePasswordDesc:
+      "Enter your current password to set a new one.",
     currentPassword: "Current password",
     currentPasswordWrong: "Current password is incorrect",
     passwordChanged: "Password updated",
     passwordMismatch: "Passwords do not match",
     passwordTooShort: "Password must be at least 6 characters",
     linkExpired: "Link expired",
-    linkExpiredDesc: "This password reset link is invalid or has expired. Please request a new one.",
+    linkExpiredDesc:
+      "This password reset link is invalid or has expired. Please request a new one.",
     redirectingLogin: "Redirecting to login…",
     pending_verification: "Awaiting verification",
     bankTransferSlips: "Bank transfer slips",
-    slipsHelpText: "Upload slips when customers send proof of bank transfer. Verify each one to mark the order as paid.",
+    slipsHelpText:
+      "Upload slips when customers send proof of bank transfer. Verify each one to mark the order as paid.",
     orderTotal: "Order total",
     verifiedAmount: "Verified",
     remaining: "Remaining",
     dropSlipHere: "Drop slip here or click to upload",
     slipFileHint: "JPG, PNG, WebP or PDF · max 2MB",
-    invalidFileType: "Only images (JPG, PNG, WebP) and PDFs are accepted",
+    invalidFileType:
+      "Only images (JPG, PNG, WebP) and PDFs are accepted",
     fileTooLarge: "File too large (max 2MB after compression)",
     selectFile: "Please select a file",
     enterAmount: "Please enter the amount on the slip",
     amountOnSlip: "Amount on slip (LKR)",
-    amountMismatchWarning: "Amount doesn't match the remaining balance of",
+    amountMismatchWarning:
+      "Amount doesn't match the remaining balance of",
     uploadSlip: "Upload slip",
     uploading: "Uploading...",
     slipUploaded: "Slip uploaded",
@@ -147,10 +158,10 @@ export const dict = {
     autoMarkedPaid: "Slip verified — order marked as paid",
     uploadedSlips: "Uploaded slips",
     pendingVerificationOf: "Pending verification:",
-    rejectionReasonPrompt: "Why is this slip being rejected? (optional)",
+    rejectionReasonPrompt:
+      "Why is this slip being rejected? (optional)",
     confirmDeleteSlip: "Delete this slip permanently?",
     verified: "Verified",
-    rejected: "Rejected",
     preview: "Preview",
     verify: "Verify",
     reject: "Reject",
@@ -162,23 +173,28 @@ export const dict = {
     backToCustomers: "Back to customers",
     customerNotFound: "Customer not found",
     editCustomer: "Edit customer",
-    confirmDeleteCustomer: "Delete this customer? Their orders will remain but will no longer be linked.",
+    confirmDeleteCustomer:
+      "Delete this customer? Their orders will remain but will no longer be linked.",
     customerNotes: "Notes",
-    customerNotesPlaceholder: "Anything to remember about this customer? E.g. 'always asks for fragile wrapping', 'pays weekly'...",
-    notesAutoSave: "Notes save automatically when you click outside.",
+    customerNotesPlaceholder:
+      "Anything to remember about this customer? E.g. 'always asks for fragile wrapping', 'pays weekly'...",
+    notesAutoSave:
+      "Notes save automatically when you click outside.",
     lifetimeSpend: "Lifetime spend",
     avgOrderValue: "Average order",
     lastOrder: "Last order",
     today: "Today",
     daysAgoSuffix: "d ago",
     orderHistory: "Order history",
-    noOrdersFromCustomer: "No orders from this customer yet.",
+    noOrdersFromCustomer:
+      "No orders from this customer yet.",
     loadMore: "Load more",
     date: "Date",
     vipCustomer: "VIP customer",
     returningCustomer: "Returning customer",
     exportOrders: "Export orders",
-    exportOrdersDesc: "Download a CSV file you can open in Excel or share with your accountant.",
+    exportOrdersDesc:
+      "Download a CSV file you can open in Excel or share with your accountant.",
     ordersToExport: "Orders to export",
     currentView: "Current view",
     allOrders: "All orders",
@@ -203,67 +219,256 @@ export const dict = {
     ordersUnit: "orders",
     noOrdersToExport: "No orders match those filters",
     branding: "Branding",
-    brandingDesc: "Your logo will appear on invoices, waybills, and the dashboard sidebar.",
+    brandingDesc:
+      "Your logo will appear on invoices, waybills, and the dashboard sidebar.",
     currentLogo: "Current logo",
-    logoAppearsOn: "Appears on invoices, waybills, and dashboard.",
+    logoAppearsOn:
+      "Appears on invoices, waybills, and dashboard.",
     replace: "Replace",
     confirmRemoveLogo: "Remove your business logo?",
-    dropLogoHere: "Drop your logo here or click to upload",
+    dropLogoHere:
+      "Drop your logo here or click to upload",
     logoFileHint: "PNG, JPG, WebP, or SVG · max 2MB",
-    logoTip: "Tip: A logo with transparent background looks best.",
+    logoTip:
+      "Tip: A logo with transparent background looks best.",
     logoUploaded: "Logo uploaded",
     logoRemoved: "Logo removed",
     completeCaptcha: "Please complete the security check",
     dangerZone: "Danger zone",
-    dangerZoneDesc: "Irreversible account actions. Please be careful.",
+    dangerZoneDesc:
+      "Irreversible account actions. Please be careful.",
     deleteAccount: "Delete account",
-    deleteAccountDesc: "Schedule your account for permanent deletion in 30 days.",
-    deleteAccountConfirmTitle: "Delete your Ordera account",
-    deleteAccountConfirmDesc: "This schedules your account for permanent deletion in 30 days. You can cancel anytime by logging back in within that window.",
+    deleteAccountDesc:
+      "Schedule your account for permanent deletion in 30 days.",
+    deleteAccountConfirmTitle:
+      "Delete your Ordera account",
+    deleteAccountConfirmDesc:
+      "This schedules your account for permanent deletion in 30 days. You can cancel anytime by logging back in within that window.",
     whatGetsDeleted: "What gets deleted:",
-    deletedItem1: "All your orders, customers, and products",
+    deletedItem1:
+      "All your orders, customers, and products",
     deletedItem2: "Your business profile and logo",
-    deletedItem3: "All payment slips and order history",
+    deletedItem3:
+      "All payment slips and order history",
     deletedItem4: "Your login credentials",
-    deletionGracePeriod: "You can recover everything if you log back in within 30 days.",
+    deletionGracePeriod:
+      "You can recover everything if you log back in within 30 days.",
     typeToConfirm: "Type",
-    enterPasswordToConfirm: "Enter your password to confirm",
-    typeDeleteToConfirm: "Type DELETE in the confirmation box",
+    enterPasswordToConfirm:
+      "Enter your password to confirm",
+    typeDeleteToConfirm:
+      "Type DELETE in the confirmation box",
     passwordRequired: "Password is required",
     scheduleDeletion: "Schedule deletion",
-    accountScheduledForDeletion: "Your account is scheduled for deletion",
-    daysUntilDeletion: "{days} days remaining. Permanent deletion on {date}.",
+    accountScheduledForDeletion:
+      "Your account is scheduled for deletion",
+    daysUntilDeletion:
+      "{days} days remaining. Permanent deletion on {date}.",
     cancelDeletion: "Cancel deletion",
-    deletionCancelled: "Deletion cancelled — your account is safe.",
-    // Public order form — settings
+    deletionCancelled:
+      "Deletion cancelled — your account is safe.",
     publicOrderForm: "Public order form",
-    publicOrderFormDesc: "Share a public URL where customers can place orders directly. Submitted orders go to your inquiries inbox for review.",
+    publicOrderFormDesc:
+      "Share a public URL where customers can place orders directly. Submitted orders go to your inquiries inbox for review.",
     publicFormUrl: "Public URL",
     saveSlug: "Save URL",
-    slugHint: "Lowercase letters, numbers, and hyphens only. 3–60 characters.",
-    slugTaken: "This URL is already taken. Try another.",
+    slugHint:
+      "Lowercase letters, numbers, and hyphens only. 3–60 characters.",
+    slugTaken:
+      "This URL is already taken. Try another.",
     saveSlugFirst: "Save your URL first",
     enablePublicForm: "Enable public form",
-    publicFormLive: "Customers can place orders right now",
-    publicFormOff: "Form is disabled — URL returns 'not available'",
+    publicFormLive:
+      "Customers can place orders right now",
+    publicFormOff:
+      "Form is disabled — URL returns 'not available'",
     publicFormEnabled: "Public form is now live",
     publicFormDisabled: "Public form disabled",
     yourPublicUrl: "Your shop URL",
-    shareUrlHint: "Share this on WhatsApp, Facebook, Instagram, or your bio.",
+    shareUrlHint:
+      "Share this on WhatsApp, Facebook, Instagram, or your bio.",
     urlCopied: "URL copied to clipboard",
     copy: "Copy",
     copied: "Copied!",
     publicFormPreview: "Open",
-
-    // Inquiry handling
-    inquiryFromPublicForm: "New inquiry from your public order form",
-    inquiryReviewDesc: "Review the details below. Confirm to convert this into a real order, or reject if it looks fake.",
+    inquiries: "Inquiries",
+    inquiriesDesc:
+      "Orders submitted via your public form, awaiting review.",
+    pendingReview: "Pending review",
+    rejected: "Rejected",
+    all: "All",
+    selected: "selected",
+    confirmAll: "Confirm all",
+    rejectAll: "Reject all",
+    clear: "Clear",
+    confirmBulkReject:
+      "Reject all selected inquiries as fake? They will be cancelled.",
+    inquiriesConfirmedCount:
+      "{count} inquiries confirmed",
+    inquiriesRejectedCount:
+      "{count} inquiries rejected",
+    publicFormNotEnabled:
+      "Your public order form is disabled",
+    publicFormNotEnabledDesc:
+      "Enable it in Settings to start accepting customer inquiries.",
+    enableInSettings: "Enable in settings",
+    searchInquiries: "Search inquiries...",
+    noPendingInquiries:
+      "No pending inquiries — you're all caught up!",
+    noRejectedInquiries: "No rejected inquiries.",
+    noInquiriesYet: "No inquiries yet.",
+    shareUrlForOrders:
+      "Share your public URL on WhatsApp / social media to start receiving orders.",
+    when: "When",
+    items: "Items",
+    item: "item",
+    itemPlural: "items",
+    bankTransferLabel: "Bank Transfer",
+    duplicate: "Duplicate",
+    duplicatePhoneWarning:
+      "Same phone number has another pending inquiry — possible fake order",
+    clickInquiryToReview:
+      "Click any inquiry to view full details and confirm/reject.",
+    inquiryFromPublicForm:
+      "New inquiry from your public order form",
+    inquiryReviewDesc:
+      "Review the details below. Confirm to convert this into a real order, or reject if it looks fake.",
     confirmInquiry: "Confirm order",
     rejectAsFake: "Reject as fake",
-    confirmRejectInquiry: "Mark this inquiry as fake? It will be cancelled.",
-    inquiryConfirmed: "Inquiry confirmed — order is now active",
-    inquiryRejected: "Inquiry rejected and cancelled",
+    confirmRejectInquiry:
+      "Mark this inquiry as fake? It will be cancelled.",
+    inquiryConfirmed:
+      "Inquiry confirmed — order is now active",
+    inquiryRejected:
+      "Inquiry rejected and cancelled",
+
+    // ============ NEW LANDING PAGE KEYS ============
+    heroEyebrow: "#1 Order Management for Sri Lankan SMEs",
+    heroHeadline:
+      "Stop Losing Orders to WhatsApp Chats and Paper Books",
+    heroSubheadline:
+      "Manage every order, COD payment, and courier dispatch — from pending to delivered — in one simple dashboard. Built for Pronto, Domex, Koombiyo, and Fardar.",
+    watchDemo: "Watch 2-min Demo",
+    noCardNeeded: "No Card Needed",
+    trustedBy: "Trusted by businesses shipping via:",
+    lkrProcessed: "LKR 50M+ processed monthly",
+    packagesDispatched: "15,000+ packages dispatched",
+
+    painHeadline:
+      "Running an Online Store in Sri Lanka Shouldn't Feel Like Chaos",
+    painSubheadline:
+      "Sound familiar? These are the daily struggles we built Ordera to eliminate.",
+    pain1Title: "Who paid? Who didn't?",
+    pain1Desc:
+      "COD payments scattered across WhatsApp, bank slips, and memory. Revenue leaks every week.",
+    pain2Title: "Which courier? What waybill?",
+    pain2Desc:
+      "Switching between Pronto, Domex, Koombiyo portals, copy-pasting addresses, losing track.",
+    pain3Title: "Where is that order?",
+    pain3Desc:
+      "Customers call 5 times a day. Your team spends hours updating statuses in Excel or Messenger.",
+
+    featuresHeadline:
+      "One Place. Every Order. Zero Chaos.",
+    featuresSubheadline:
+      "A workflow that actually matches how your Sri Lankan business runs.",
+    feature1Title: "All Your Orders, One Pipeline",
+    feature1Desc:
+      "Move each order from Pending → Confirmed → Packed → Shipped → Delivered. Your whole team sees the same status in real-time.",
+    feature1Bullet1:
+      "Color-coded status tags for instant clarity",
+    feature1Bullet2:
+      "Bulk update orders in one click",
+    feature1Bullet3:
+      "Customer notifications via WhatsApp (coming soon)",
+    feature2Title:
+      "COD & Bank Transfers, Finally Under Control",
+    feature2Desc:
+      "Mark payment as collected when the courier returns. Upload bank slips. See daily collection totals at a glance.",
+    feature2Bullet1: "Daily COD collection report",
+    feature2Bullet2:
+      "Bank slip image upload & verification",
+    feature2Bullet3:
+      "Pending payment dashboard with alerts",
+    feature3Title:
+      "Dispatch Without Leaving Ordera",
+    feature3Desc:
+      "Assign Pronto, Domex, Koombiyo, or Fardar from a dropdown. Paste waybill once. Track delivery status. No more courier-hopping.",
+    feature3Bullet1:
+      "All major Sri Lankan couriers supported",
+    feature3Bullet2:
+      "Waybill history & tracking links",
+    feature3Bullet3:
+      "Courier performance comparison",
+    feature4Title: "Dashboard That Speaks Money",
+    feature4Desc:
+      "Revenue in LKR, top products, daily trends — no spreadsheets required. Make decisions based on real data, not guesswork.",
+    feature4Bullet1:
+      "LKR revenue dashboards with trends",
+    feature4Bullet2: "Top-selling products report",
+    feature4Bullet3:
+      "Export everything to Excel when needed",
+
+    howItWorksHeadline:
+      "From Sign-Up to Smooth Operations in Under 10 Minutes",
+    step1Title: "Create your account",
+    step1Desc:
+      "Add your business name, currency (LKR default), and courier preferences. Takes 2 minutes.",
+    step2Title: "Add your first order",
+    step2Desc:
+      "Customer name, items, value, payment method, courier. Or import from CSV in seconds.",
+    step3Title: "Move, dispatch, track",
+    step3Desc:
+      "Your team updates statuses. You watch the dashboard. Chaos ends. Operations become 10x faster.",
+
+    pricingHeadline: "Plans That Grow With Your Store",
+    pricingSubheadline:
+      "All prices in LKR. No hidden fees. Cancel anytime.",
+    starterPlan: "Starter",
+    growthPlan: "Growth",
+    businessPlan: "Business",
+    ordersUpTo: "Up to {count} orders",
+    mostPopular: "Most Popular",
+    startTrial: "Start Free Trial",
+    contactSales: "Contact Sales",
+    allPlansInclude:
+      "All plans include: Sinhala & English UI • Mobile-responsive dashboard • Secure data hosting • Free onboarding call",
+
+    testimonialsHeadline: "See Why Store Owners Switched",
+    testimonial1Quote:
+      "Before Ordera, we missed tracking about 15% of COD returns. Now we catch every single one. The bank slip upload feature alone saved us LKR 40,000 in lost collections last month.",
+    testimonial1Name: "Nuwan P.",
+    testimonial1Role: "Co-owner, TrendyHome.lk, Colombo",
+    testimonial2Quote:
+      "My staff refuses to go back to the old way. The Sinhala UI made training so easy. Even my non-tech-savvy packing guy uses it daily.",
+    testimonial2Name: "Sandamali W.",
+    testimonial2Role: "Founder, Kurunegala Spices",
+    testimonial3Quote:
+      "Having Pronto, Domex, and Koombiyo in one dropdown cut our dispatch time by half. No more logging into three sites for 50 orders.",
+    testimonial3Name: "Rizwan M.",
+    testimonial3Role: "Logistics Lead, Galle Fashion Hub",
+
+    faqHeadline: "Common Questions (and Honest Answers)",
+    faq1Q: "Is my data safe?",
+    faq1A: "Yes. We use secure cloud hosting with daily backups. Your order and customer data is never shared or sold. We comply with Sri Lankan data protection standards.",
+    faq2Q: "Can I use this on my phone?",
+    faq2A: "Absolutely. Ordera is fully mobile-responsive. Your team can update orders, check payments, and dispatch from any smartphone — no app install needed.",
+    faq3Q: "What if I need to cancel?",
+    faq3A: "No lock-in contracts. Cancel anytime from your account settings. Export all your data before you go — it's yours, not ours.",
+    faq4Q: "Do you integrate directly with Pronto/Domex APIs?",
+    faq4A: "Currently, you paste waybills manually for maximum courier flexibility. Direct API integration with Sri Lankan couriers is on our near-term roadmap (Q4 2026).",
+    faq5Q: "Can I give access to my staff?",
+    faq5A: "Yes. The Growth plan and above include multi-user access with role-based permissions (Admin, Manager, Staff). Everyone sees only what they need to.",
+
+    finalHeadline:
+      "Ready to Ditch the Paper Books and WhatsApp Chaos?",
+    finalSubheadline:
+      "Start your free 14-day trial. Onboard with a 1-on-1 call in Sinhala or English. No card, no pressure.",
+    bookDemo: "Book a 15-min Demo Call",
+    joinBusinesses:
+      "Join 200+ Sri Lankan businesses already using Ordera",
   },
+
   si: {
     appName: "Ordera",
     tagline: "ශ්‍රී ලාංකික ව්‍යාපාර සඳහා නිර්මාණය කළ ඇණවුම් කළමනාකරණය",
@@ -329,6 +534,7 @@ export const dict = {
     selectProduct: "භාණ්ඩය තෝරන්න",
     cod: "භාරදීමේදී මුදල්",
     bankTransfer: "බැංකු මාරුව",
+    bankTransferLabel: "බැංකු මාරුව",
     cash: "මුදල්",
     unpaid: "ගෙවා නැත",
     paid: "ගෙවා ඇත",
@@ -355,63 +561,87 @@ export const dict = {
     lkr: "රු.",
     addFirstOrder: "ඔබේ පළමු ඇණවුම එකතු කරන්න",
     landingFeat1Title: "සියලුම ඇණවුම්, එක තැනක",
-    landingFeat1Desc: "පොරොත්තුවෙන් → තහවුරු → ඇසුරුම් → යැවූ → භාරදුන්.",
+    landingFeat1Desc:
+      "පොරොත්තුවෙන් → තහවුරු → ඇසුරුම් → යැවූ → භාරදුන්.",
     landingFeat2Title: "COD සහ බැංකු මාරු",
-    landingFeat2Desc: "ගෙවීම් තත්ත්වය සලකුණු කරන්න, එකතු කිරීම් නිරීක්ෂණය කරන්න.",
+    landingFeat2Desc:
+      "ගෙවීම් තත්ත්වය සලකුණු කරන්න, එකතු කිරීම් නිරීක්ෂණය කරන්න.",
     landingFeat3Title: "කුරියර් භාරදීම තුළ",
-    landingFeat3Desc: "Pronto, Domex, Koombiyo, Fardar — සෑම ඇණවුමක් සඳහාම.",
+    landingFeat3Desc:
+      "Pronto, Domex, Koombiyo, Fardar — සෑම ඇණවුමක් සඳහාම.",
     landingFeat4Title: "මුදල් කතා කරන Dashboard",
-    landingFeat4Desc: "රු. වලින් ආදායම, ප්‍රමුඛ භාණ්ඩ, දිනපතා සහ මාසික ප්‍රවණතා.",
+    landingFeat4Desc:
+      "රු. වලින් ආදායම, ප්‍රමුඛ භාණ්ඩ, දිනපතා සහ මාසික ප්‍රවණතා.",
     features: "විශේෂාංග",
     pricing: "Beta කාලය තුළ නොමිලේ",
-    footerLine: "ශ්‍රී ලාංකික සබැඳි ව්‍යාපාර සඳහා සාදන ලදී.",
-     forgotPassword: "මුරපදය අමතකද?",
+    footerLine:
+      "ශ්‍රී ලාංකික සබැඳි ව්‍යාපාර සඳහා සාදන ලදී.",
+    forgotPassword: "මුරපදය අමතකද?",
     resetPassword: "මුරපදය යළි සකසන්න",
-    resetPasswordDesc: "ඔබේ ඊමේල් ලිපිනය ඇතුළත් කරන්න, අපි මුරපදය යළි සකසන සබැඳියක් එවන්නෙමු.",
+    resetPasswordDesc:
+      "ඔබේ ඊමේල් ලිපිනය ඇතුළත් කරන්න, අපි මුරපදය යළි සකසන සබැඳියක් එවන්නෙමු.",
     sendResetLink: "සබැඳිය එවන්න",
     checkEmail: "ඔබේ ඊමේල් පරීක්ෂා කරන්න",
-    resetLinkSent: "මුරපදය යළි සකසන සබැඳිය එවන ලදී",
+    resetLinkSent:
+      "මුරපදය යළි සකසන සබැඳිය එවන ලදී",
     sendAgain: "නැවත එවන්න",
     backToLogin: "පිවිසුමට ආපසු",
     setNewPassword: "නව මුරපදයක් සකසන්න",
-    setNewPasswordDesc: "ඔබ මෙතෙක් භාවිතා නොකළ ශක්තිමත් මුරපදයක් තෝරන්න.",
+    setNewPasswordDesc:
+      "ඔබ මෙතෙක් භාවිතා නොකළ ශක්තිමත් මුරපදයක් තෝරන්න.",
     newPassword: "නව මුරපදය",
     confirmPassword: "මුරපදය තහවුරු කරන්න",
     changePassword: "මුරපදය වෙනස් කරන්න",
-    changePasswordDesc: "නව මුරපදයක් සැකසීමට වර්තමාන මුරපදය ඇතුළත් කරන්න.",
+    changePasswordDesc:
+      "නව මුරපදයක් සැකසීමට වර්තමාන මුරපදය ඇතුළත් කරන්න.",
     currentPassword: "වර්තමාන මුරපදය",
-    currentPasswordWrong: "වර්තමාන මුරපදය වැරදියි",
-    passwordChanged: "මුරපදය යාවත්කාලීන කරන ලදී",
+    currentPasswordWrong:
+      "වර්තමාන මුරපදය වැරදියි",
+    passwordChanged:
+      "මුරපදය යාවත්කාලීන කරන ලදී",
     passwordMismatch: "මුරපද නොගැළපේ",
-    passwordTooShort: "මුරපදය අවම අකුරු 6ක් විය යුතුය",
+    passwordTooShort:
+      "මුරපදය අවම අකුරු 6ක් විය යුතුය",
     linkExpired: "සබැඳිය කල් ඉකුත්ව ඇත",
-    linkExpiredDesc: "මෙම සබැඳිය අවලංගුයි හෝ කල් ඉකුත්ව ඇත. කරුණාකර නව එකක් ඉල්ලන්න.",
-    redirectingLogin: "පිවිසුමට යොමු කරමින්…",
+    linkExpiredDesc:
+      "මෙම සබැඳිය අවලංගුයි හෝ කල් ඉකුත්ව ඇත. කරුණාකර නව එකක් ඉල්ලන්න.",
+    redirectingLogin:
+      "පිවිසුමට යොමු කරමින්…",
     pending_verification: "සත්‍යාපනය අපේක්ෂිතයි",
     bankTransferSlips: "බැංකු මාරු slips",
-    slipsHelpText: "පාරිභෝගිකයන් බැංකු මාරු සාක්ෂි එවූ විට slip එක upload කරන්න. ගෙවීම තහවුරු කිරීමට verify කරන්න.",
+    slipsHelpText:
+      "පාරිභෝගිකයන් බැංකු මාරු සාක්ෂි එවූ විට slip එක upload කරන්න. ගෙවීම තහවුරු කිරීමට verify කරන්න.",
     orderTotal: "මුළු එකතුව",
     verifiedAmount: "තහවුරු කර ඇති",
     remaining: "ඉතිරි",
-    dropSlipHere: "Slip එක මෙතනට drop කරන්න හෝ ක්ලික් කරන්න",
+    dropSlipHere:
+      "Slip එක මෙතනට drop කරන්න හෝ ක්ලික් කරන්න",
     slipFileHint: "JPG, PNG, WebP හෝ PDF · උපරිම 2MB",
-    invalidFileType: "පින්තූර (JPG, PNG, WebP) සහ PDF පමණක් පිළිගැනේ",
-    fileTooLarge: "File එක විශාලයි (උපරිම 2MB)",
+    invalidFileType:
+      "පින්තූර (JPG, PNG, WebP) සහ PDF පමණක් පිළිගැනේ",
+    fileTooLarge:
+      "File එක විශාලයි (උපරිම 2MB)",
     selectFile: "කරුණාකර file එකක් තෝරන්න",
-    enterAmount: "කරුණාකර slip එකේ ඇති මුදල ඇතුළු කරන්න",
+    enterAmount:
+      "කරුණාකර slip එකේ ඇති මුදල ඇතුළු කරන්න",
     amountOnSlip: "Slip එකේ මුදල (රු.)",
-    amountMismatchWarning: "මුදල ඉතිරි balance එකට සමාන නෑ:",
+    amountMismatchWarning:
+      "මුදල ඉතිරි balance එකට සමාන නෑ:",
     uploadSlip: "Slip Upload කරන්න",
     uploading: "Upload වෙනවා...",
     slipUploaded: "Slip එක upload කළා",
     slipVerified: "Slip එක verify කළා",
     slipRejected: "Slip එක reject කළා",
     slipDeleted: "Slip එක මකා දැමුවා",
-    autoMarkedPaid: "Slip එක verify වුණා — order එක paid ලෙස සලකුණු කළා",
+    autoMarkedPaid:
+      "Slip එක verify වුණා — order එක paid ලෙස සලකුණු කළා",
     uploadedSlips: "Upload කළ Slips",
-    pendingVerificationOf: "Verify කරන්න ඉතිරි:",
-    rejectionReasonPrompt: "Slip එක reject කරන්නේ ඇයි? (අවශ්‍ය නෑ)",
-    confirmDeleteSlip: "මේ slip එක ස්ථිරව මකන්නද?",
+    pendingVerificationOf:
+      "Verify කරන්න ඉතිරි:",
+    rejectionReasonPrompt:
+      "Slip එක reject කරන්නේ ඇයි? (අවශ්‍ය නෑ)",
+    confirmDeleteSlip:
+      "මේ slip එක ස්ථිරව මකන්නද?",
     verified: "තහවුරුයි",
     rejected: "ප්‍රතික්ෂේපිතයි",
     preview: "පෙරදර්ශනය",
@@ -420,28 +650,38 @@ export const dict = {
     close: "වසන්න",
     loading: "පූරණය වෙනවා...",
     actionNeeded: "ක්‍රියාවලියක් අවශ්‍යයි",
-    slipsAwaitingVerification: "slips සත්‍යාපනය කිරීමට ඇත",
-    inPendingSlips: "පොරොත්තුවෙන් ඇති බැංකු මාරු slips",
+    slipsAwaitingVerification:
+      "slips සත්‍යාපනය කිරීමට ඇත",
+    inPendingSlips:
+      "පොරොත්තුවෙන් ඇති බැංකු මාරු slips",
     backToCustomers: "පාරිභෝගිකයන්ට ආපසු",
-    customerNotFound: "පාරිභෝගිකයා හමු නොවීය",
-    editCustomer: "පාරිභෝගිකයා සංස්කරණය කරන්න",
-    confirmDeleteCustomer: "මෙම පාරිභෝගිකයා මකනවාද? ඔවුන්ගේ ඇණවුම් රැඳී ඇත නමුත් සම්බන්ධතාව ඉවත් වේ.",
+    customerNotFound:
+      "පාරිභෝගිකයා හමු නොවීය",
+    editCustomer:
+      "පාරිභෝගිකයා සංස්කරණය කරන්න",
+    confirmDeleteCustomer:
+      "මෙම පාරිභෝගිකයා මකනවාද? ඔවුන්ගේ ඇණවුම් රැඳී ඇත නමුත් සම්බන්ධතාව ඉවත් වේ.",
     customerNotes: "සටහන්",
-    customerNotesPlaceholder: "මෙම පාරිභෝගිකයා ගැන මතක තබා ගත යුතු දේ? උදා: 'සැමවිටම fragile wrapping ඉල්ලයි', 'සතිපතා ගෙවයි'...",
-    notesAutoSave: "පිටතට ක්ලික් කළ විට සටහන් ස්වයංක්‍රීයව සුරකින්නේ ය.",
+    customerNotesPlaceholder:
+      "මෙම පාරිභෝගිකයා ගැන මතක තබා ගත යුතු දේ? උදා: 'සැමවිටම fragile wrapping ඉල්ලයි', 'සතිපතා ගෙවයි'...",
+    notesAutoSave:
+      "පිටතට ක්ලික් කළ විට සටහන් ස්වයංක්‍රීයව සුරකින්නේ ය.",
     lifetimeSpend: "මුළු වියදම",
     avgOrderValue: "සාමාන්‍ය ඇණවුම",
     lastOrder: "අවසන් ඇණවුම",
     today: "අද",
     daysAgoSuffix: "දිනයකට පෙර",
     orderHistory: "ඇණවුම් ඉතිහාසය",
-    noOrdersFromCustomer: "මෙම පාරිභෝගිකයාගෙන් තවම ඇණවුම් නෑ.",
+    noOrdersFromCustomer:
+      "මෙම පාරිභෝගිකයාගෙන් තවම ඇණවුම් නෑ.",
     loadMore: "තවත් පෙන්වන්න",
     date: "දිනය",
     vipCustomer: "VIP පාරිභෝගික",
-    returningCustomer: "නැවත එන පාරිභෝගික",
+    returningCustomer:
+      "නැවත එන පාරිභෝගික",
     exportOrders: "ඇණවුම් export කරන්න",
-    exportOrdersDesc: "Excel වලින් open කරන්න පුළුවන් CSV file එකක් download කරන්න.",
+    exportOrdersDesc:
+      "Excel වලින් open කරන්න පුළුවන් CSV file එකක් download කරන්න.",
     ordersToExport: "Export කරන ඇණවුම්",
     currentView: "දැන් පෙනෙන",
     allOrders: "සියලු ඇණවුම්",
@@ -464,75 +704,296 @@ export const dict = {
     exporting: "Export වෙනවා...",
     ordersExported: "ඇණවුම් export කළා",
     ordersUnit: "ඇණවුම්",
-    noOrdersToExport: "මෙම filters වලට ගැලපෙන ඇණවුම් නෑ",
+    noOrdersToExport:
+      "මෙම filters වලට ගැලපෙන ඇණවුම් නෑ",
     branding: "ව්‍යාපාර සලකුණ",
-    brandingDesc: "ඔබේ logo එක invoices, waybills, සහ dashboard sidebar එකේ පෙන්වයි.",
+    brandingDesc:
+      "ඔබේ logo එක invoices, waybills, සහ dashboard sidebar එකේ පෙන්වයි.",
     currentLogo: "දැන් තියෙන logo එක",
-    logoAppearsOn: "Invoices, waybills, සහ dashboard එකේ පෙනේ.",
+    logoAppearsOn:
+      "Invoices, waybills, සහ dashboard එකේ පෙනේ.",
     replace: "මාරු කරන්න",
-    confirmRemoveLogo: "ඔබේ ව්‍යාපාර logo එක ඉවත් කරන්නද?",
-    dropLogoHere: "Logo එක මෙතන drop කරන්න හෝ upload කරන්න click කරන්න",
-    logoFileHint: "PNG, JPG, WebP, හෝ SVG · උපරිම 2MB",
-    logoTip: "ඉඟිය: transparent background සහිත logo එක හොඳම විදිහට පෙනේ.",
+    confirmRemoveLogo:
+      "ඔබේ ව්‍යාපාර logo එක ඉවත් කරන්නද?",
+    dropLogoHere:
+      "Logo එක මෙතන drop කරන්න හෝ upload කරන්න click කරන්න",
+    logoFileHint:
+      "PNG, JPG, WebP, හෝ SVG · උපරිම 2MB",
+    logoTip:
+      "ඉඟිය: transparent background සහිත logo එක හොඳම විදිහට පෙනේ.",
     logoUploaded: "Logo upload කෙරුවා",
     logoRemoved: "Logo ඉවත් කෙරුවා",
-    completeCaptcha: "ආරක්ෂණ පරීක්ෂාව සම්පූර්ණ කරන්න",
+    completeCaptcha:
+      "ආරක්ෂණ පරීක්ෂාව සම්පූර්ණ කරන්න",
     dangerZone: "අවදානම් කලාපය",
-    dangerZoneDesc: "නැවත හැරවිය නොහැකි ක්‍රියා. ප්‍රවේසමෙන්.",
+    dangerZoneDesc:
+      "නැවත හැරවිය නොහැකි ක්‍රියා. ප්‍රවේසමෙන්.",
     deleteAccount: "ගිණුම මකන්න",
-    deleteAccountDesc: "ඔබේ ගිණුම දින 30කින් සදහටම මකන්න සැලසුම් කරන්න.",
-    deleteAccountConfirmTitle: "ඔබේ Ordera ගිණුම මකන්න",
-    deleteAccountConfirmDesc: "මෙය දින 30කින් සදහටම මකා දැමීමට ඔබේ ගිණුම සැලසුම් කරයි. එම කාලය තුළ නැවත login වී cancel කරන්නත් පුළුවන්.",
+    deleteAccountDesc:
+      "ඔබේ ගිණුම දින 30කින් සදහටම මකන්න සැලසුම් කරන්න.",
+    deleteAccountConfirmTitle:
+      "ඔබේ Ordera ගිණුම මකන්න",
+    deleteAccountConfirmDesc:
+      "මෙය දින 30කින් සදහටම මකා දැමීමට ඔබේ ගිණුම සැලසුම් කරයි. එම කාලය තුළ නැවත login වී cancel කරන්නත් පුළුවන්.",
     whatGetsDeleted: "මැකෙන දේවල්:",
-    deletedItem1: "සියලු ඇණවුම්, පාරිභෝගිකයන්, සහ නිෂ්පාදන",
-    deletedItem2: "ඔබේ ව්‍යාපාර profile සහ logo",
-    deletedItem3: "සියලු payment slips සහ ඇණවුම් ඉතිහාසය",
-    deletedItem4: "ඔබේ login credentials",
-    deletionGracePeriod: "දින 30 ඇතුළත නැවත login වුවහොත් සියල්ල නැවත සකස් කළ හැක.",
+    deletedItem1:
+      "සියලු ඇණවුම්, පාරිභෝගිකයන්, සහ නිෂ්පාදන",
+    deletedItem2:
+      "ඔබේ ව්‍යාපාර profile සහ logo",
+    deletedItem3:
+      "සියලු payment slips සහ ඇණවුම් ඉතිහාසය",
+    deletedItem4:
+      "ඔබේ login credentials",
+    deletionGracePeriod:
+      "දින 30 ඇතුළත නැවත login වුවහොත් සියල්ල නැවත සකස් කළ හැක.",
     typeToConfirm: "Type",
-    enterPasswordToConfirm: "තහවුරු කිරීමට ඔබේ password දාන්න",
-    typeDeleteToConfirm: "Confirmation box එකේ DELETE කියලා type කරන්න",
+    enterPasswordToConfirm:
+      "තහවුරු කිරීමට ඔබේ password දාන්න",
+    typeDeleteToConfirm:
+      "Confirmation box එකේ DELETE කියලා type කරන්න",
     passwordRequired: "Password අවශ්‍යයි",
-    scheduleDeletion: "මැකීම සැලසුම් කරන්න",
-    accountScheduledForDeletion: "ඔබේ ගිණුම මැකීමට සැලසුම් කර ඇත",
-    daysUntilDeletion: "දින {days}ක් ඉතිරියි. {date} දින සදහටම මැකේ.",
+    scheduleDeletion:
+      "මැකීම සැලසුම් කරන්න",
+    accountScheduledForDeletion:
+      "ඔබේ ගිණුම මැකීමට සැලසුම් කර ඇත",
+    daysUntilDeletion:
+      "දින {days}ක් ඉතිරියි. {date} දින සදහටම මැකේ.",
     cancelDeletion: "මැකීම අවලංගු කරන්න",
-    deletionCancelled: "මැකීම අවලංගු කෙරුවා — ඔබේ ගිණුම ආරක්ෂිතයි.",
-    // Public order form — settings
+    deletionCancelled:
+      "මැකීම අවලංගු කෙරුවා — ඔබේ ගිණුම ආරක්ෂිතයි.",
     publicOrderForm: "පොදු ඇණවුම් form එක",
-    publicOrderFormDesc: "පාරිභෝගිකයින්ට කෙලින්ම ඇණවුම් කරන්න පුළුවන් public URL එකක් share කරන්න. ලැබෙන ඇණවුම් ඔබේ inquiries inbox එකට යයි.",
+    publicOrderFormDesc:
+      "පාරිභෝගිකයින්ට කෙලින්ම ඇණවුම් කරන්න පුළුවන් public URL එකක් share කරන්න. ලැබෙන ඇණවුම් ඔබේ inquiries inbox එකට යයි.",
     publicFormUrl: "Public URL",
     saveSlug: "URL save කරන්න",
-    slugHint: "Lowercase අකුරු, ඉලක්කම්, සහ hyphens පමණයි. අකුරු 3-60ක්.",
-    slugTaken: "මේ URL එක දැනටමත් භාවිතා වෙනවා. වෙන එකක් try කරන්න.",
-    saveSlugFirst: "පළමුව ඔබේ URL එක save කරන්න",
-    enablePublicForm: "Public form enable කරන්න",
-    publicFormLive: "පාරිභෝගිකයින්ට දැන්ම ඇණවුම් කරන්න පුළුවන්",
-    publicFormOff: "Form එක disabled — URL එක 'not available' පෙන්වයි",
-    publicFormEnabled: "Public form දැන් live",
-    publicFormDisabled: "Public form disable කෙරුවා",
+    slugHint:
+      "Lowercase අකුරු, ඉලක්කම්, සහ hyphens පමණයි. අකුරු 3-60ක්.",
+    slugTaken:
+      "මේ URL එක දැනටමත් භාවිතා වෙනවා. වෙන එකක් try කරන්න.",
+    saveSlugFirst:
+      "පළමුව ඔබේ URL එක save කරන්න",
+    enablePublicForm:
+      "Public form enable කරන්න",
+    publicFormLive:
+      "පාරිභෝගිකයින්ට දැන්ම ඇණවුම් කරන්න පුළුවන්",
+    publicFormOff:
+      "Form එක disabled — URL එක 'not available' පෙන්වයි",
+    publicFormEnabled:
+      "Public form දැන් live",
+    publicFormDisabled:
+      "Public form disable කෙරුවා",
     yourPublicUrl: "ඔබේ shop URL එක",
-    shareUrlHint: "මෙය WhatsApp, Facebook, Instagram, හෝ ඔබේ bio එකේ share කරන්න.",
-    urlCopied: "URL clipboard එකට copy කෙරුවා",
+    shareUrlHint:
+      "මෙය WhatsApp, Facebook, Instagram, හෝ ඔබේ bio එකේ share කරන්න.",
+    urlCopied:
+      "URL clipboard එකට copy කෙරුවා",
     copy: "Copy",
     copied: "Copy කෙරුවා!",
     publicFormPreview: "Open කරන්න",
+    inquiryFromPublicForm:
+      "ඔබේ public form එකෙන් අලුත් inquiry එකක්",
+    inquiryReviewDesc:
+      "පහත details review කරන්න. Confirm කලොත් මෙය real order එකක් වෙනවා, fake එකක් නම් reject කරන්න.",
+    confirmInquiry:
+      "ඇණවුම confirm කරන්න",
+    rejectAsFake:
+      "Fake එකක් ලෙස reject කරන්න",
+    confirmRejectInquiry:
+      "මේ inquiry එක fake එකක් ලෙස mark කරන්නද? එය cancelled වෙනවා.",
+    inquiryConfirmed:
+      "Inquiry confirm කෙරුවා — order එක දැන් active",
+    inquiryRejected:
+      "Inquiry reject වෙලා cancelled වුණා",
+    inquiries: "Inquiries",
+    inquiriesDesc:
+      "ඔබගේ public form එකෙන් ලැබුණු ඇණවුම් review කිරීමට බලාපොරොත්තුවෙන් ඇත.",
+    pendingReview:
+      "Review බලාපොරොත්තුවෙන්",
+    all: "සියල්ල",
+    selected: "තෝරාගත්",
+    confirmAll: "සියල්ල confirm කරන්න",
+    rejectAll: "සියල්ල reject කරන්න",
+    clear: "Clear",
+    confirmBulkReject:
+      "තෝරාගත් සියලු inquiries fake ලෙස reject කරන්නද? ඒවා cancelled වේ.",
+    inquiriesConfirmedCount:
+      "{count} inquiries confirm කළා",
+    inquiriesRejectedCount:
+      "{count} inquiries reject කළා",
+    publicFormNotEnabled:
+      "ඔබගේ public order form එක disable කර ඇත",
+    publicFormNotEnabledDesc:
+      "පාරිභෝගික inquiries ලබා ගැනීමට Settings වලින් enable කරන්න.",
+    enableInSettings:
+      "Settings වලින් enable කරන්න",
+    searchInquiries: "Inquiries සොයන්න...",
+    noPendingInquiries:
+      "Pending inquiries නැහැ. සියල්ල අවසන්!",
+    noRejectedInquiries:
+      "Reject කළ inquiries නැහැ.",
+    noInquiriesYet: "තවම inquiries නැහැ.",
+    shareUrlForOrders:
+      "ඇණවුම් ලබා ගැනීමට ඔබගේ public URL එක WhatsApp / social media වල share කරන්න.",
+    when: "කවදාද",
+    items: "භාණ්ඩ",
+    item: "භාණ්ඩය",
+    itemPlural: "භාණ්ඩ",
+    duplicate: "Duplicate",
+    duplicatePhoneWarning:
+      "මෙම phone number එකෙන් තවත් pending inquiry එකක් ඇත. Fake එකක් විය හැක.",
+    clickInquiryToReview:
+      "Inquiry එකක් click කර full details බලා confirm හෝ reject කරන්න.",
+    loadingInquiries: "Loading...",
 
-    // Inquiry handling
-    inquiryFromPublicForm: "ඔබේ public form එකෙන් අලුත් inquiry එකක්",
-    inquiryReviewDesc: "පහත details review කරන්න. Confirm කලොත් මෙය real order එකක් වෙනවා, fake එකක් නම් reject කරන්න.",
-    confirmInquiry: "ඇණවුම confirm කරන්න",
-    rejectAsFake: "Fake එකක් ලෙස reject කරන්න",
-    confirmRejectInquiry: "මේ inquiry එක fake එකක් ලෙස mark කරන්නද? එය cancelled වෙනවා.",
-    inquiryConfirmed: "Inquiry confirm කෙරුවා — order එක දැන් active",
-    inquiryRejected: "Inquiry reject වෙලා cancelled වුණා",
+    // ============ NEW LANDING PAGE KEYS — SINHALA ============
+    heroEyebrow:
+      "ශ්‍රී ලංකා කුඩා හා මධ්‍ය පරිමාණ ව්‍යාපාර සඳහා #1 ඇණවුම් කළමනාකරණය",
+    heroHeadline:
+      "WhatsApp Chat සහ Paper Books වලට Orders නැතිවීම නවත්වන්න",
+    heroSubheadline:
+      "සෑම ඇණවුමක්ම, COD ගෙවීමක්ම, සහ courier dispatch එකක්ම — pending ඉඳන් delivered දක්වා — එක සරල dashboard එකකින් කළමනාකරණය කරන්න. Pronto, Domex, Koombiyo, Fardar සඳහා සාදන ලදී.",
+    watchDemo: "විනාඩි 2 Demo එකක් බලන්න",
+    noCardNeeded: "Card එකක් අවශ්‍ය නැත",
+    trustedBy: "මෙම couriers සමඟ වැඩ කරන ව්‍යාපාර:",
+    lkrProcessed: "මාසිකව රු. මිලියන 50+ සකසයි",
+    packagesDispatched: "15,000+ packages යවා ඇත",
+
+    painHeadline:
+      "ශ්‍රී ලංකාවේ Online Store එකක් පවත්වාගෙන යාම Chaos එකක් නොවිය යුතුයි",
+    painSubheadline:
+      "හුරුපුරුදුද? මේවා Ordera නැති කරන්න හදපු දෛනික අරගල.",
+    pain1Title: "කවුද ගෙව්වේ? කවුද නැත්තේ?",
+    pain1Desc:
+      "COD ගෙවීම් WhatsApp, bank slips, memory වල විසිරිලා. සෑම සතියකම revenue leak වෙනවා.",
+    pain2Title:
+      "මොන courierද? මොන waybill එකද?",
+    pain2Desc:
+      "Pronto, Domex, Koombiyo portals අතර මාරු වෙමින්, addresses copy-paste කරමින්, track එක නැති වෙනවා.",
+    pain3Title: "කෝ ඒ order එක?",
+    pain3Desc:
+      "පාරිභෝගිකයෝ දවසට 5 සැරයක් call කරනවා. Team එක Excel හෝ Messenger වල status update කරන්න පැය ගණන් ගත කරනවා.",
+
+    featuresHeadline:
+      "එක තැනක්. සෑම Order එකක්ම. Chaos Zero.",
+    featuresSubheadline:
+      "ඔබේ ශ්‍රී ලාංකික ව්‍යාපාරය ඇත්තටම ක්‍රියාත්මක වන workflow එක.",
+    feature1Title:
+      "ඔබේ සියලුම Orders, එක Pipeline එකක",
+    feature1Desc:
+      "සෑම order එකක්ම Pending → Confirmed → Packed → Shipped → Delivered හරහා ගෙන යන්න. ඔබේ මුළු team එකටම එකම status එක real-time බලන්න පුළුවන්.",
+    feature1Bullet1:
+      "ක්ෂණික පැහැදිලි කමට color-coded status tags",
+    feature1Bullet2:
+      "එක click එකකින් orders ගොඩක් update කරන්න",
+    feature1Bullet3:
+      "WhatsApp හරහා customer notifications (ඉක්මණින් පැමිණේ)",
+    feature2Title:
+      "COD සහ බැංකු මාරු, අවසානයේ පාලනයට",
+    feature2Desc:
+      "Courier එක return වෙන විට payment collected කියලා mark කරන්න. Bank slips upload කරන්න. දිනපතා collection totals බලන්න.",
+    feature2Bullet1:
+      "දිනපතා COD collection report",
+    feature2Bullet2:
+      "Bank slip image upload & verification",
+    feature2Bullet3:
+      "Pending payment dashboard with alerts",
+    feature3Title:
+      "Ordera එකෙන් පිටවෙන්නේ නැතුව Dispatch කරන්න",
+    feature3Desc:
+      "Dropdown එකකින් Pronto, Domex, Koombiyo, හෝ Fardar assign කරන්න. Waybill paste කරන්න. Delivery status track කරන්න.",
+    feature3Bullet1:
+      "සියලුම ප්‍රධාන ශ්‍රී ලාංකික couriers සඳහා",
+    feature3Bullet2:
+      "Waybill history & tracking links",
+    feature3Bullet3:
+      "Courier performance comparison",
+    feature4Title:
+      "මුදල් කතා කරන Dashboard එකක්",
+    feature4Desc:
+      "රු. වලින් ආදායම, top products, daily trends — spreadsheets අවශ්‍ය නෑ. Real data මත පදනම්ව තීරණ ගන්න.",
+    feature4Bullet1:
+      "LKR revenue dashboards with trends",
+    feature4Bullet2:
+      "Top-selling products report",
+    feature4Bullet3:
+      "අවශ්‍ය විට Excel වලට export කරන්න",
+
+    howItWorksHeadline:
+      "Sign-Up සිට Smooth Operations දක්වා විනාඩි 10 ඇතුළත",
+    step1Title: "ඔබේ ගිණුම සාදන්න",
+    step1Desc:
+      "ව්‍යාපාර නම, currency (LKR default), සහ courier preferences එකතු කරන්න. විනාඩි 2 ගතවේ.",
+    step2Title:
+      "ඔබේ පළමු order එක එකතු කරන්න",
+    step2Desc:
+      "Customer නම, items, value, payment method, courier. හෝ CSV එකකින් import කරන්න.",
+    step3Title:
+      "Move, dispatch, track කරන්න",
+    step3Desc:
+      "Team එක status update කරනවා. ඔබ dashboard එක දිහා බලනවා. Chaos එක ඉවරයි. Operations 10x වේගවත්.",
+
+    pricingHeadline:
+      "ඔබේ Store එකත් එක්ක Grow වෙන Plans",
+    pricingSubheadline:
+      "සියලු මිල LKR වලින්. Hidden fees නැත. ඕනෑම වෙලාවක cancel කරන්න.",
+    starterPlan: "Starter",
+    growthPlan: "Growth",
+    businessPlan: "Business",
+    ordersUpTo: "Orders {count} දක්වා",
+    mostPopular: "වඩාත් ජනප්‍රිය",
+    startTrial: "Free Trial Start කරන්න",
+    contactSales: "Sales අමතන්න",
+    allPlansInclude:
+      "සියලු plans වලට ඇතුළත්: සිංහල & English UI • Mobile-responsive dashboard • Secure data hosting • නොමිලේ onboarding call",
+
+    testimonialsHeadline:
+      "Store Owners Switch වුණේ ඇයි කියලා බලන්න",
+    testimonial1Quote:
+      "Ordera වලට කලින්, COD returns වලින් 15%ක් track කරන්න miss වුණා. දැන් අපි හැම එකක්ම catch කරනවා. Bank slip upload feature එකෙන් විතරක් පහුගිය මාසෙ රු. 40,000ක් lost collections වලින් save කළා.",
+    testimonial1Name: "Nuwan P.",
+    testimonial1Role:
+      "Co-owner, TrendyHome.lk, Colombo",
+    testimonial2Quote:
+      "මගේ staff පරණ විදිහට යන්න refuse කරනවා. සිංහල UI එක training එක හරිම easy කළා. Tech-savvy නැති packing guy පවා දිනපතා use කරනවා.",
+    testimonial2Name: "Sandamali W.",
+    testimonial2Role:
+      "Founder, Kurunegala Spices",
+    testimonial3Quote:
+      "Pronto, Domex, Koombiyo dropdown එකකින් තිබීම dispatch time එක බාගෙට cut කළා. Orders 50කට sites 3ක login වෙන්න ඕන නෑ.",
+    testimonial3Name: "Rizwan M.",
+    testimonial3Role:
+      "Logistics Lead, Galle Fashion Hub",
+
+    faqHeadline:
+      "පොදු ප්‍රශ්න (සහ අවංක පිළිතුරු)",
+    faq1Q: "මගේ data safeද?",
+    faq1A: "ඔව්. Secure cloud hosting සහ daily backups. ඔබේ order සහ customer data කිසිවිටෙක share හෝ sell කරන්නේ නැත. ශ්‍රී ලංකා data protection standards සමඟ comply වේ.",
+    faq2Q: "මට මෙය phone එකෙන් use කරන්න පුළුවන්ද?",
+    faq2A: "අනිවාර්යයෙන්ම. Ordera fully mobile-responsive. Team එකට orders update කරන්න, payments check කරන්න, dispatch කරන්න ඕනෑම smartphone එකකින් පුළුවන් — app install අවශ්‍ය නැත.",
+    faq3Q: "Cancel කරන්න ඕන වුණොත්?",
+    faq3A: "Lock-in contracts නැත. Account settings වලින් ඕනෑම වෙලාවක cancel කරන්න. යන්න කලින් data export කරන්න — ඒ ඔබේ, අපේ නෙවෙයි.",
+    faq4Q: "Pronto/Domex APIs සමඟ directly integrate වෙනවද?",
+    faq4A: "දැනට, waybills manually paste කරන්න උපරිම courier flexibility සඳහා. Courier APIs සමඟ direct integration අපේ near-term roadmap එකේ (Q4 2026).",
+    faq5Q: "මගේ staff ට access දෙන්න පුළුවන්ද?",
+    faq5A: "ඔව්. Growth plan එකෙන් ඉහළට role-based permissions (Admin, Manager, Staff) සහිත multi-user access ඇතුළත්. හැමෝම බලන්න ඕන දේ විතරක් බලයි.",
+
+    finalHeadline:
+      "Paper Books සහ WhatsApp Chaos එක අතහරින්න සූදානම්ද?",
+    finalSubheadline:
+      "දින 14ක free trial එක start කරන්න. සිංහලෙන් හෝ English වලින් 1-on-1 call එකකින් onboard වෙන්න. Card නැත, pressure නැත.",
+    bookDemo:
+      "විනාඩි 15ක Demo Call එකක් Book කරන්න",
+    joinBusinesses:
+      "Ordera use කරන 200+ ශ්‍රී ලාංකික ව්‍යාපාර වලට join වෙන්න",
   },
 } as const;
 
 export type Dict = typeof dict.en;
 export type DictKey = keyof Dict;
 
-export function formatLKR(n: number | string | null | undefined): string {
+export function formatLKR(
+  n: number | string | null | undefined
+): string {
   const v = typeof n === "string" ? parseFloat(n) : n ?? 0;
   return new Intl.NumberFormat("en-LK", {
     style: "currency",
@@ -563,5 +1024,14 @@ export const ORDER_STATUSES = [
   "cancelled",
 ] as const;
 
-export const PAYMENT_METHODS = ["cod", "bank_transfer", "cash"] as const;
-export const PAYMENT_STATUSES = ["unpaid", "paid", "pending_verification", "refunded"] as const;
+export const PAYMENT_METHODS = [
+  "cod",
+  "bank_transfer",
+  "cash",
+] as const;
+export const PAYMENT_STATUSES = [
+  "unpaid",
+  "paid",
+  "pending_verification",
+  "refunded",
+] as const;

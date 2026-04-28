@@ -23,6 +23,7 @@ import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppCustomersRouteImport } from './routes/_app/customers'
 import { Route as AppAdminRouteImport } from './routes/_app/admin'
 import { Route as AppOrdersIndexRouteImport } from './routes/_app/orders.index'
+import { Route as AppInquiriesIndexRouteImport } from './routes/_app/inquiries.index'
 import { Route as AppOrdersPrintBatchRouteImport } from './routes/_app/orders.print-batch'
 import { Route as AppOrdersNewRouteImport } from './routes/_app/orders.new'
 import { Route as AppOrdersOrderIdRouteImport } from './routes/_app/orders.$orderId'
@@ -99,6 +100,11 @@ const AppOrdersIndexRoute = AppOrdersIndexRouteImport.update({
   path: '/orders/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppInquiriesIndexRoute = AppInquiriesIndexRouteImport.update({
+  id: '/inquiries/',
+  path: '/inquiries/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppOrdersPrintBatchRoute = AppOrdersPrintBatchRouteImport.update({
   id: '/orders/print-batch',
   path: '/orders/print-batch',
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
   '/orders/print-batch': typeof AppOrdersPrintBatchRoute
+  '/inquiries/': typeof AppInquiriesIndexRoute
   '/orders/': typeof AppOrdersIndexRoute
   '/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
@@ -168,6 +175,7 @@ export interface FileRoutesByTo {
   '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
   '/orders/print-batch': typeof AppOrdersPrintBatchRoute
+  '/inquiries': typeof AppInquiriesIndexRoute
   '/orders': typeof AppOrdersIndexRoute
   '/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
@@ -191,6 +199,7 @@ export interface FileRoutesById {
   '/_app/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/_app/orders/new': typeof AppOrdersNewRoute
   '/_app/orders/print-batch': typeof AppOrdersPrintBatchRoute
+  '/_app/inquiries/': typeof AppInquiriesIndexRoute
   '/_app/orders/': typeof AppOrdersIndexRoute
   '/_app/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/_app/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
@@ -214,6 +223,7 @@ export interface FileRouteTypes {
     | '/orders/$orderId'
     | '/orders/new'
     | '/orders/print-batch'
+    | '/inquiries/'
     | '/orders/'
     | '/orders/$orderId/invoice'
     | '/orders/$orderId/waybill'
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/orders/$orderId'
     | '/orders/new'
     | '/orders/print-batch'
+    | '/inquiries'
     | '/orders'
     | '/orders/$orderId/invoice'
     | '/orders/$orderId/waybill'
@@ -257,6 +268,7 @@ export interface FileRouteTypes {
     | '/_app/orders/$orderId'
     | '/_app/orders/new'
     | '/_app/orders/print-batch'
+    | '/_app/inquiries/'
     | '/_app/orders/'
     | '/_app/orders/$orderId/invoice'
     | '/_app/orders/$orderId/waybill'
@@ -372,6 +384,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppOrdersIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/inquiries/': {
+      id: '/_app/inquiries/'
+      path: '/inquiries'
+      fullPath: '/inquiries/'
+      preLoaderRoute: typeof AppInquiriesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/orders/print-batch': {
       id: '/_app/orders/print-batch'
       path: '/orders/print-batch'
@@ -452,6 +471,7 @@ interface AppRouteChildren {
   AppOrdersOrderIdRoute: typeof AppOrdersOrderIdRouteWithChildren
   AppOrdersNewRoute: typeof AppOrdersNewRoute
   AppOrdersPrintBatchRoute: typeof AppOrdersPrintBatchRoute
+  AppInquiriesIndexRoute: typeof AppInquiriesIndexRoute
   AppOrdersIndexRoute: typeof AppOrdersIndexRoute
 }
 
@@ -465,6 +485,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppOrdersOrderIdRoute: AppOrdersOrderIdRouteWithChildren,
   AppOrdersNewRoute: AppOrdersNewRoute,
   AppOrdersPrintBatchRoute: AppOrdersPrintBatchRoute,
+  AppInquiriesIndexRoute: AppInquiriesIndexRoute,
   AppOrdersIndexRoute: AppOrdersIndexRoute,
 }
 
