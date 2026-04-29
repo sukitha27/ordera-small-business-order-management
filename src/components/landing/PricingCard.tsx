@@ -11,9 +11,27 @@ interface PricingCardProps {
   features: string[];
   cta: string;
   popular: boolean;
+  isFree?: boolean;
 }
 
-export function PricingCard({ name, price, period, ordersIncluded, features, cta, popular }: PricingCardProps) {
+// Your WhatsApp number — update this to your real number
+const WHATSAPP_NUMBER = "94761148054";
+
+export function PricingCard({
+  name,
+  price,
+  period,
+  ordersIncluded,
+  features,
+  cta,
+  popular,
+  isFree = false,
+}: PricingCardProps) {
+  const whatsappMessage = encodeURIComponent(
+    `Hi, I'd like to subscribe to the Ordera ${name} plan (Rs. ${price}${period}). Please help me get started.`,
+  );
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -43,11 +61,22 @@ export function PricingCard({ name, price, period, ordersIncluded, features, cta
           </li>
         ))}
       </ul>
-      <Link to="/signup">
-        <Button className="w-full" variant={popular ? "default" : "outline"}>
-          {cta}
-        </Button>
-      </Link>
+
+      {isFree ? (
+        // Free plan → go straight to signup
+        <Link to="/signup">
+          <Button className="w-full" variant="outline">
+            {cta}
+          </Button>
+        </Link>
+      ) : (
+        // Paid plans → WhatsApp with pre-filled message
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+          <Button className="w-full" variant={popular ? "default" : "outline"}>
+            {cta}
+          </Button>
+        </a>
+      )}
     </motion.div>
   );
 }
