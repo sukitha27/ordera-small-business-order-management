@@ -629,12 +629,12 @@ function AdminPage() {
                       <Input
                         type="number"
                         className="h-8 w-24 text-xs"
-                        value={r.plan_order_limit}
+                        defaultValue={r.plan_order_limit}
+                        key={r.id + "-" + r.plan_order_limit}
                         onBlur={(e) => {
                           const v = parseInt(e.target.value);
-                          if (!isNaN(v) && v !== r.plan_order_limit) updatePlanLimit(r.id, v);
+                          if (!isNaN(v) && v > 0 && v !== r.plan_order_limit) updatePlanLimit(r.id, v);
                         }}
-                        onChange={() => {}}
                       />
                     </td>
                     <td className="px-4 py-3">

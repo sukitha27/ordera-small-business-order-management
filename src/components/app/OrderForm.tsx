@@ -161,7 +161,7 @@ export function OrderForm({
     },
   });
 
-  // Customer phone suggestions — exact-ish match first, normalized fallback
+  // Customer phone suggestions
   const { data: suggestions = [] } = useQuery<CustomerMatch[]>({
     queryKey: ["customer-phone-lookup", business?.id, debouncedQuery],
     enabled: !!business?.id && debouncedQuery.replace(/\D/g, "").length >= 3,
@@ -169,8 +169,6 @@ export function OrderForm({
       const raw = debouncedQuery.trim();
       const normalized = normalizePhone(raw);
 
-      // Build OR filter: match phone or name ilike either the raw or the normalized form
-      // Supabase .or() takes comma-separated filters
       const filters = [
         `phone.ilike.%${raw}%`,
         `phone.ilike.%${normalized}%`,
@@ -184,7 +182,6 @@ export function OrderForm({
         .limit(6);
 
       if (error) return [];
-      // De-dupe by id (the OR filter can return duplicates)
       const seen = new Set<string>();
       const unique: CustomerMatch[] = [];
       for (const c of data ?? []) {
@@ -249,7 +246,6 @@ export function OrderForm({
 
   const removeItem = (idx: number) => setItems((it) => it.filter((_, i) => i !== idx));
 
-  // Build the WhatsApp link based on current form state + items + business language
   const whatsappLink = (() => {
     if (!existing || !business || !order.customer_phone || items.length === 0) return null;
     const message = buildOrderMessage({
@@ -281,7 +277,7 @@ export function OrderForm({
     });
     return buildWhatsAppLink(order.customer_phone, message);
   })();
- 
+
   const whatsappLabel = existing
     ? whatsappButtonLabel(
         {
@@ -300,7 +296,8 @@ export function OrderForm({
           waybill_number: order.waybill_number || null,
         },
         business?.language ?? "en",
-      ):"";
+      )
+    : "";
 
   const save = useMutation({
     mutationFn: async () => {
@@ -308,12 +305,29 @@ export function OrderForm({
       if (!order.customer_name) throw new Error("Customer name required");
       if (items.length === 0) throw new Error("Add at least one item");
 
-      // Resolve / upsert the customer before saving the order so we always have a customer_id.
+      // ── Plan limit check (new orders only, not edits) ──────────────────
+      // We check server-side via can_create_order() so the limit can't be
+      // bypassed by a user who had the form open before hitting the limit.
+      if (!existing) {
+        const { data: limitData, error: limitErr } = await supabase.rpc(
+          "can_create_order",
+          { business_uuid: business.id },
+        );
+        if (limitErr) throw limitErr;
+        const limitCheck = limitData as unknown as { allowed: boolean; used: number; limit: number };
+        if (!limitCheck.allowed) {
+          throw new Error(
+            `Monthly order limit reached (${limitCheck.used}/${limitCheck.limit}). Please upgrade your plan to continue creating orders.`,
+          );
+        }
+      }
+      // ──────────────────────────────────────────────────────────────────
+
+      // Resolve / upsert the customer
       let resolvedCustomerId: string | null = order.customer_id;
       const phoneDigits = normalizePhone(order.customer_phone);
 
       if (!resolvedCustomerId && phoneDigits.length >= 7) {
-        // Try to find an existing customer by normalized phone
         const { data: existingMatches } = await supabase
           .from("customers")
           .select("id, phone")
@@ -325,7 +339,6 @@ export function OrderForm({
 
         if (matched) {
           resolvedCustomerId = matched.id;
-          // Update the customer with latest info in case address/city changed
           await supabase
             .from("customers")
             .update({
@@ -335,7 +348,6 @@ export function OrderForm({
             })
             .eq("id", matched.id);
         } else {
-          // Create a new customer record
           const { data: created, error: cErr } = await supabase
             .from("customers")
             .insert({
@@ -378,7 +390,11 @@ export function OrderForm({
         if (error) throw error;
         await supabase.from("order_items").delete().eq("order_id", orderId);
       } else {
-        const { data, error } = await supabase.from("orders").insert(payload).select("id").single();
+        const { data, error } = await supabase
+          .from("orders")
+          .insert(payload)
+          .select("id")
+          .single();
         if (error) throw error;
         orderId = data.id;
       }
@@ -400,6 +416,7 @@ export function OrderForm({
       qc.invalidateQueries({ queryKey: ["orders"] });
       qc.invalidateQueries({ queryKey: ["dashboard"] });
       qc.invalidateQueries({ queryKey: ["customers"] });
+      qc.invalidateQueries({ queryKey: ["plan-limit-check"] });
       onDone();
     },
     onError: (e: Error) => toast.error(e.message),
@@ -472,7 +489,6 @@ export function OrderForm({
                             key={c.id}
                             type="button"
                             onMouseDown={(e) => {
-                              // Use onMouseDown so it fires before the input blur
                               e.preventDefault();
                               selectCustomer(c);
                             }}
@@ -573,7 +589,9 @@ export function OrderForm({
                       type="number"
                       min={1}
                       value={it.quantity}
-                      onChange={(e) => updateItem(idx, { quantity: parseInt(e.target.value) || 1 })}
+                      onChange={(e) =>
+                        updateItem(idx, { quantity: parseInt(e.target.value) || 1 })
+                      }
                     />
                   </div>
                   <div className="col-span-4 sm:col-span-3">
@@ -614,7 +632,9 @@ export function OrderForm({
         {/* Right column */}
         <div className="space-y-6">
           <div className="rounded-xl border border-border bg-card p-6 space-y-4">
-            <h2 className="font-semibold">{t("status")} & {t("payment")}</h2>
+            <h2 className="font-semibold">
+              {t("status")} & {t("payment")}
+            </h2>
             <div className="space-y-2">
               <Label>{t("status")}</Label>
               <Select
@@ -683,7 +703,12 @@ export function OrderForm({
             <h2 className="font-semibold">Delivery</h2>
             <div className="space-y-2">
               <Label>{t("courier")}</Label>
-              <Select value={order.courier || "none"} onValueChange={(v) => setOrder({ ...order, courier: v === "none" ? "" : v })}>
+              <Select
+                value={order.courier || "none"}
+                onValueChange={(v) =>
+                  setOrder({ ...order, courier: v === "none" ? "" : v })
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="—" />
                 </SelectTrigger>
@@ -747,12 +772,16 @@ export function OrderForm({
               </Button>
             </a>
           )}
- 
+
           <div className="flex gap-2">
             <Button variant="outline" className="flex-1" onClick={onDone}>
               {t("cancel")}
             </Button>
-            <Button className="flex-1" onClick={() => save.mutate()} disabled={save.isPending}>
+            <Button
+              className="flex-1"
+              onClick={() => save.mutate()}
+              disabled={save.isPending}
+            >
               {t("save")}
             </Button>
           </div>
