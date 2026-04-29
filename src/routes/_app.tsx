@@ -32,8 +32,18 @@ function AppLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/login" });
-  }, [loading, user, navigate]);
+  if (!loading && !user) navigate({ to: "/login" });
+}, [loading, user, navigate]);
+
+// Admin users with no business → go straight to /admin
+// Don't let them get stuck on merchant pages
+useEffect(() => {
+  if (!loading && user && isAdmin && !business) {
+    const path = window.location.pathname;
+    const isAdminRoute = path.startsWith("/admin");
+    if (!isAdminRoute) navigate({ to: "/admin" });
+  }
+}, [loading, user, isAdmin, business, navigate]);
 
   // Pending-inquiries count for the sidebar badge.
   // Lightweight HEAD query — only counts rows, doesn't pull data.
@@ -63,21 +73,24 @@ function AppLayout() {
   }
   if (!user) return null;
 
-  const nav = [
-    { to: "/dashboard", icon: LayoutDashboard, label: t("dashboard"), badge: 0 },
-    {
-      to: "/inquiries",
-      icon: Inbox,
-      label: t("inquiries"),
-      badge: pendingInquiriesCount,
-    },
-    { to: "/orders", icon: ShoppingBag, label: t("orders"), badge: 0 },
-    { to: "/products", icon: Package, label: t("products"), badge: 0 },
-    { to: "/customers", icon: Users, label: t("customers"), badge: 0 },
-    { to: "/reports", icon: BarChart3, label: t("reports"), badge: 0 },
-    { to: "/settings", icon: Settings, label: t("settings"), badge: 0 },
-    ...(isAdmin ? [{ to: "/admin", icon: Shield, label: "Admin", badge: 0 }] : []),
-  ] as const;
+  // Admin-only nav (no business row)
+const adminOnlyNav = [
+  { to: "/admin", icon: Shield, label: "Admin", badge: 0 },
+] as const;
+
+// Full merchant nav
+const merchantNav = [
+  { to: "/dashboard", icon: LayoutDashboard, label: t("dashboard"), badge: 0 },
+  { to: "/inquiries", icon: Inbox, label: t("inquiries"), badge: pendingInquiriesCount },
+  { to: "/orders", icon: ShoppingBag, label: t("orders"), badge: 0 },
+  { to: "/products", icon: Package, label: t("products"), badge: 0 },
+  { to: "/customers", icon: Users, label: t("customers"), badge: 0 },
+  { to: "/reports", icon: BarChart3, label: t("reports"), badge: 0 },
+  { to: "/settings", icon: Settings, label: t("settings"), badge: 0 },
+  ...(isAdmin ? [{ to: "/admin", icon: Shield, label: "Admin", badge: 0 }] : []),
+] as const;
+
+const nav = (isAdmin && !business) ? adminOnlyNav : merchantNav;
 
   const hasLogo = !!business?.logo_url;
 
@@ -99,12 +112,20 @@ function AppLayout() {
           </>
         )}
       </Link>
-      <div className="px-4 py-4 border-b border-sidebar-border">
-        <div className="text-xs uppercase text-muted-foreground tracking-wider">
-          {business?.business_name || "—"}
-        </div>
-        <div className="text-sm font-medium truncate">{business?.owner_name || user?.email}</div>
-      </div>
+      {/* Hide merchant info for pure admin accounts (no business) */}
+{business ? (
+  <div className="px-4 py-4 border-b border-sidebar-border">
+    <div className="text-xs uppercase text-muted-foreground tracking-wider">
+      {business.business_name}
+    </div>
+    <div className="text-sm font-medium truncate">{business.owner_name || user?.email}</div>
+  </div>
+) : isAdmin ? (
+  <div className="px-4 py-4 border-b border-sidebar-border">
+    <div className="text-xs uppercase text-muted-foreground tracking-wider">Platform</div>
+    <div className="text-sm font-medium">Ordera Admin</div>
+  </div>
+) : null}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {nav.map((item) => {
           const active = location.pathname.startsWith(item.to);
