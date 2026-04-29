@@ -579,7 +579,7 @@ function LandingPage() {
 
           {/* Bottom bar */}
           <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground max-w-5xl mx-auto">
-            <p>&copy; 2026 VeloraTech Lanka. Made in Sri Lanka 🇱🇰</p>
+            <p>&copy; 2026 Velora Technologies. Made in Sri Lanka 🇱🇰</p>
             <div className="flex items-center gap-4">
               <button onClick={() => setLang("en")} className="hover:text-foreground transition-colors">
                 English
