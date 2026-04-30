@@ -521,8 +521,8 @@ function LandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
-                <img src="/ordera-logo.svg" alt="Ordera" className="h-8 w-auto light-only" />
-                <img src="/logo-lockup-inverse.svg" alt="Ordera" className="h-8 w-auto dark-only" />
+                <img src="/ordera-logo.svg" alt="Ordera" className="h-10 md:h-11 w-auto light-only" />
+                <img src="/logo-lockup-inverse.svg" alt="Ordera" className="h-10 md:h-11 w-auto dark-only" />
               </div>
               <p className="text-sm text-muted-foreground">{t("footerLine")}</p>
             </div>
