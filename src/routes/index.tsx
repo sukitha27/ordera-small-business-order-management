@@ -39,7 +39,11 @@ function CourierLogo({ src, alt }: { src: string; alt: string }) {
       <img
         src={src}
         alt={alt}
-        className="h-12 w-auto max-w-40 object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+        // Mobile: full color, full opacity (no hover on touch)
+        // Desktop (md+): greyscale dimmed, full color on hover
+        className="h-12 w-auto max-w-[160px] object-contain transition-all duration-300
+          opacity-80
+          md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100"
       />
     </div>
   );
