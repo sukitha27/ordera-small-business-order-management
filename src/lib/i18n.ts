@@ -342,18 +342,31 @@ export const dict = {
     inquiryRejected:
       "Inquiry rejected and cancelled",
 
-    // ============ NEW LANDING PAGE KEYS ============
-    heroEyebrow: "#1 Order Management for Sri Lankan SMEs",
+    // ============ LANDING PAGE KEYS — ENGLISH ============
+
+    // ── Hero ──────────────────────────────────────────────
+    // FIX: Removed "#1" — no data to support that claim
+    heroEyebrow: "Built for Sri Lankan online businesses",
+
     heroHeadline:
       "Stop Losing Orders to WhatsApp Chats and Paper Books",
-    heroSubheadline:
-      "Manage every order, COD payment, and courier dispatch — from pending to delivered — in one simple dashboard. Built for Pronto, Domex, Koombiyo, and Fardar.",
-    watchDemo: "Watch 2-min Demo",
-    noCardNeeded: "No Card Needed",
-    trustedBy: "Trusted by businesses shipping via:",
-    lkrProcessed: "LKR 50M+ processed monthly",
-    packagesDispatched: "15,000+ packages dispatched",
 
+    // FIX: "Built for" → "Works with" — no API integration yet
+    heroSubheadline:
+      "Manage every order, COD payment, and courier dispatch — from pending to delivered — in one simple dashboard. Works with Pronto, Domex, Koombiyo, and Fardar.",
+
+    watchDemo: "See how it works",
+
+    // FIX: "No Card Needed" kept — accurate for free plan
+    noCardNeeded: "No card needed",
+
+    // FIX: Removed fake stats (LKR 50M+, 15,000+ packages)
+    // These keys are kept for backwards compat but now show honest content
+    trustedBy: "Works with all major SL couriers",
+    lkrProcessed: "No hidden fees",
+    packagesDispatched: "Cancel anytime",
+
+    // ── Pain points ───────────────────────────────────────
     painHeadline:
       "Running an Online Store in Sri Lanka Shouldn't Feel Like Chaos",
     painSubheadline:
@@ -368,6 +381,7 @@ export const dict = {
     pain3Desc:
       "Customers call 5 times a day. Your team spends hours updating statuses in Excel or Messenger.",
 
+    // ── Features ──────────────────────────────────────────
     featuresHeadline:
       "One Place. Every Order. Zero Chaos.",
     featuresSubheadline:
@@ -393,7 +407,7 @@ export const dict = {
     feature3Title:
       "Dispatch Without Leaving Ordera",
     feature3Desc:
-      "Assign Pronto, Domex, Koombiyo, or Fardar from a dropdown. Paste waybill once. Track delivery status. No more courier-hopping.",
+      "Assign Pronto, Domex, Koombiyo, or Fardar from a dropdown. Paste waybill once. Track delivery status.",
     feature3Bullet1:
       "All major Sri Lankan couriers supported",
     feature3Bullet2:
@@ -409,6 +423,7 @@ export const dict = {
     feature4Bullet3:
       "Export everything to Excel when needed",
 
+    // ── How it works ──────────────────────────────────────
     howItWorksHeadline:
       "From Sign-Up to Smooth Operations in Under 10 Minutes",
     step1Title: "Create your account",
@@ -421,6 +436,7 @@ export const dict = {
     step3Desc:
       "Your team updates statuses. You watch the dashboard. Chaos ends. Operations become 10x faster.",
 
+    // ── Pricing ───────────────────────────────────────────
     pricingHeadline: "Plans That Grow With Your Store",
     pricingSubheadline:
       "All prices in LKR. No hidden fees. Cancel anytime.",
@@ -429,51 +445,64 @@ export const dict = {
     businessPlan: "Business",
     ordersUpTo: "Up to {count} orders",
     mostPopular: "Most Popular",
-    startTrial: "Start Free Trial",
+
+    // FIX: "Start Free Trial" → "Get started free"
+    // There is no trial — free plan is free forever up to 50 orders
+    startTrial: "Get started free",
     contactSales: "Contact Sales",
     allPlansInclude:
-      "All plans include: Sinhala & English UI • Mobile-responsive dashboard • Secure data hosting • Free onboarding call",
+      "All plans include: Sinhala & English UI · Mobile-responsive · Secure data hosting · Bank slip verification",
 
+    // ── Testimonials (keys kept for backwards compat, section removed from UI) ──
     testimonialsHeadline: "See Why Store Owners Switched",
-    testimonial1Quote:
-      "Before Ordera, we missed tracking about 15% of COD returns. Now we catch every single one. The bank slip upload feature alone saved us LKR 40,000 in lost collections last month.",
-    testimonial1Name: "Nuwan P.",
-    testimonial1Role: "Co-owner, TrendyHome.lk, Colombo",
-    testimonial2Quote:
-      "My staff refuses to go back to the old way. The Sinhala UI made training so easy. Even my non-tech-savvy packing guy uses it daily.",
-    testimonial2Name: "Sandamali W.",
-    testimonial2Role: "Founder, Kurunegala Spices",
-    testimonial3Quote:
-      "Having Pronto, Domex, and Koombiyo in one dropdown cut our dispatch time by half. No more logging into three sites for 50 orders.",
-    testimonial3Name: "Rizwan M.",
-    testimonial3Role: "Logistics Lead, Galle Fashion Hub",
+    testimonial1Quote: "",
+    testimonial1Name: "",
+    testimonial1Role: "",
+    testimonial2Quote: "",
+    testimonial2Name: "",
+    testimonial2Role: "",
+    testimonial3Quote: "",
+    testimonial3Name: "",
+    testimonial3Role: "",
 
+    // ── FAQ ───────────────────────────────────────────────
     faqHeadline: "Common Questions (and Honest Answers)",
     faq1Q: "Is my data safe?",
-    faq1A: "Yes. We use secure cloud hosting with daily backups. Your order and customer data is never shared or sold. We comply with Sri Lankan data protection standards.",
+    faq1A: "Yes. We use secure cloud hosting (Supabase on AWS) with encrypted storage. Your order and customer data is never shared or sold. Each merchant's data is completely isolated — no other business can see yours.",
     faq2Q: "Can I use this on my phone?",
     faq2A: "Absolutely. Ordera is fully mobile-responsive. Your team can update orders, check payments, and dispatch from any smartphone — no app install needed.",
     faq3Q: "What if I need to cancel?",
     faq3A: "No lock-in contracts. Cancel anytime from your account settings. Export all your data before you go — it's yours, not ours.",
-    faq4Q: "Do you integrate directly with Pronto/Domex APIs?",
-    faq4A: "Currently, you paste waybills manually for maximum courier flexibility. Direct API integration with Sri Lankan couriers is on our near-term roadmap (Q4 2026).",
-    faq5Q: "Can I give access to my staff?",
-    faq5A: "Yes. The Growth plan and above include multi-user access with role-based permissions (Admin, Manager, Staff). Everyone sees only what they need to.",
 
+    // FIX: Removed "Q4 2026" specific date promise
+    faq4Q: "Do you integrate directly with Pronto/Domex APIs?",
+    faq4A: "Currently, you paste waybills manually for maximum courier flexibility. Direct API integration with Sri Lankan couriers is on our roadmap — we'll notify you when it's ready.",
+
+    // FIX: Removed multi-user access claim — feature not built yet
+    faq5Q: "Can I give access to my staff?",
+    faq5A: "Multi-user access with role-based permissions is on our roadmap for paid plans. For now, each account has a single login. Contact us if this is a priority for your business.",
+
+    // ── Final CTA ─────────────────────────────────────────
     finalHeadline:
       "Ready to Ditch the Paper Books and WhatsApp Chaos?",
+
+    // FIX: Removed "free 14-day trial" — no trial system
+    // Free plan is 50 orders/month forever, not a time-limited trial
     finalSubheadline:
-      "Start your free 14-day trial. Onboard with a 1-on-1 call in Sinhala or English. No card, no pressure.",
-    bookDemo: "Book a 15-min Demo Call",
+      "Start free — 50 orders per month, no card needed. Get a personal onboarding call in Sinhala or English.",
+
+    bookDemo: "Book a demo on WhatsApp",
+
+    // FIX: Removed "Join 200+ businesses" — fabricated number
     joinBusinesses:
-      "Join 200+ Sri Lankan businesses already using Ordera",
+      "Free during beta — no card needed",
   },
 
   si: {
     appName: "Ordera",
     tagline: "ශ්‍රී ලාංකික ව්‍යාපාර සඳහා නිර්මාණය කළ ඇණවුම් කළමනාකරණය",
     heroDesc:
-      "ඇණවුම් නිරීක්ෂණය කරන්න, භාණ්ඩ කළමනාකරණය කරන්න, COD සහ බැංකු මාරු හසුරුවන්න, සහ Pronto, Domex හෝ Koombiyo සමඟ දාන්න — එක පැහැදිලි dashboard එකකින්.",
+      "ඇණවුම් නිරීක්ෂණය කරන්න, භාණ්ඩ කළමනාකරණය කරන්න, COD සහ බැංකු මාරු හසුරුවන්න, සහ Pronto, Domex හෝ Koombiyo සමඟ dispatch කරන්න — එක පැහැදිලි dashboard එකකින්.",
     getStarted: "නොමිලේ ආරම්භ කරන්න",
     signIn: "පුරන්න",
     signUp: "ලියාපදිංචි වන්න",
@@ -845,18 +874,26 @@ export const dict = {
       "Inquiry එකක් click කර full details බලා confirm හෝ reject කරන්න.",
     loadingInquiries: "Loading...",
 
-    // ============ NEW LANDING PAGE KEYS — SINHALA ============
+    // ============ LANDING PAGE KEYS — SINHALA ============
+
+    // FIX: Removed "#1" claim
     heroEyebrow:
-      "ශ්‍රී ලංකා කුඩා හා මධ්‍ය පරිමාණ ව්‍යාපාර සඳහා #1 ඇණවුම් කළමනාකරණය",
+      "ශ්‍රී ලාංකික online ව්‍යාපාර සඳහා සාදන ලදී",
+
     heroHeadline:
       "WhatsApp Chat සහ Paper Books වලට Orders නැතිවීම නවත්වන්න",
+
+    // FIX: "Built for" → "Works with"
     heroSubheadline:
-      "සෑම ඇණවුමක්ම, COD ගෙවීමක්ම, සහ courier dispatch එකක්ම — pending ඉඳන් delivered දක්වා — එක සරල dashboard එකකින් කළමනාකරණය කරන්න. Pronto, Domex, Koombiyo, Fardar සඳහා සාදන ලදී.",
-    watchDemo: "විනාඩි 2 Demo එකක් බලන්න",
+      "සෑම ඇණවුමක්ම, COD ගෙවීමක්ම, සහ courier dispatch එකක්ම — pending ඉඳන් delivered දක්වා — එක සරල dashboard එකකින් කළමනාකරණය කරන්න. Pronto, Domex, Koombiyo, Fardar සමඟ ක්‍රියා කරයි.",
+
+    watchDemo: "ක්‍රියා කරන ආකාරය බලන්න",
     noCardNeeded: "Card එකක් අවශ්‍ය නැත",
-    trustedBy: "මෙම couriers සමඟ වැඩ කරන ව්‍යාපාර:",
-    lkrProcessed: "මාසිකව රු. මිලියන 50+ සකසයි",
-    packagesDispatched: "15,000+ packages යවා ඇත",
+
+    // FIX: Removed fake stats
+    trustedBy: "ප්‍රධාන SL courier සියල්ල සමඟ ක්‍රියා කරයි",
+    lkrProcessed: "Hidden fees නැත",
+    packagesDispatched: "ඕනෑම වෙලාවක cancel කරන්න",
 
     painHeadline:
       "ශ්‍රී ලංකාවේ Online Store එකක් පවත්වාගෙන යාම Chaos එකක් නොවිය යුතුයි",
@@ -930,7 +967,7 @@ export const dict = {
     step3Title:
       "Move, dispatch, track කරන්න",
     step3Desc:
-      "Team එක status update කරනවා. ඔබ dashboard එක දිහා බලනවා. Chaos එක ඉවරයි. Operations 10x වේගවත්.",
+      "Team එක status update කරනවා. ඔබ dashboard එක දිහා බලනවා. Chaos එක ඉවරයි.",
 
     pricingHeadline:
       "ඔබේ Store එකත් එක්ක Grow වෙන Plans",
@@ -941,50 +978,55 @@ export const dict = {
     businessPlan: "Business",
     ordersUpTo: "Orders {count} දක්වා",
     mostPopular: "වඩාත් ජනප්‍රිය",
-    startTrial: "Free Trial Start කරන්න",
+
+    // FIX: "Start Free Trial" → "Get started free"
+    startTrial: "නොමිලේ ආරම්භ කරන්න",
     contactSales: "Sales අමතන්න",
     allPlansInclude:
-      "සියලු plans වලට ඇතුළත්: සිංහල & English UI • Mobile-responsive dashboard • Secure data hosting • නොමිලේ onboarding call",
+      "සියලු plans වලට ඇතුළත්: සිංහල & English UI · Mobile-responsive · Secure data hosting · Bank slip verification",
 
-    testimonialsHeadline:
-      "Store Owners Switch වුණේ ඇයි කියලා බලන්න",
-    testimonial1Quote:
-      "Ordera වලට කලින්, COD returns වලින් 15%ක් track කරන්න miss වුණා. දැන් අපි හැම එකක්ම catch කරනවා. Bank slip upload feature එකෙන් විතරක් පහුගිය මාසෙ රු. 40,000ක් lost collections වලින් save කළා.",
-    testimonial1Name: "Nuwan P.",
-    testimonial1Role:
-      "Co-owner, TrendyHome.lk, Colombo",
-    testimonial2Quote:
-      "මගේ staff පරණ විදිහට යන්න refuse කරනවා. සිංහල UI එක training එක හරිම easy කළා. Tech-savvy නැති packing guy පවා දිනපතා use කරනවා.",
-    testimonial2Name: "Sandamali W.",
-    testimonial2Role:
-      "Founder, Kurunegala Spices",
-    testimonial3Quote:
-      "Pronto, Domex, Koombiyo dropdown එකකින් තිබීම dispatch time එක බාගෙට cut කළා. Orders 50කට sites 3ක login වෙන්න ඕන නෑ.",
-    testimonial3Name: "Rizwan M.",
-    testimonial3Role:
-      "Logistics Lead, Galle Fashion Hub",
+    // Testimonials — keys kept but emptied (section removed from UI)
+    testimonialsHeadline: "",
+    testimonial1Quote: "",
+    testimonial1Name: "",
+    testimonial1Role: "",
+    testimonial2Quote: "",
+    testimonial2Name: "",
+    testimonial2Role: "",
+    testimonial3Quote: "",
+    testimonial3Name: "",
+    testimonial3Role: "",
 
     faqHeadline:
       "පොදු ප්‍රශ්න (සහ අවංක පිළිතුරු)",
     faq1Q: "මගේ data safeද?",
-    faq1A: "ඔව්. Secure cloud hosting සහ daily backups. ඔබේ order සහ customer data කිසිවිටෙක share හෝ sell කරන්නේ නැත. ශ්‍රී ලංකා data protection standards සමඟ comply වේ.",
+    faq1A: "ඔව්. Secure cloud hosting (Supabase on AWS) සහ encrypted storage. ඔබේ order සහ customer data කිසිවිටෙක share හෝ sell කරන්නේ නැත. සෑම merchant කෙනෙකුගේ data ම සම්පූර්ණයෙන් isolated.",
     faq2Q: "මට මෙය phone එකෙන් use කරන්න පුළුවන්ද?",
     faq2A: "අනිවාර්යයෙන්ම. Ordera fully mobile-responsive. Team එකට orders update කරන්න, payments check කරන්න, dispatch කරන්න ඕනෑම smartphone එකකින් පුළුවන් — app install අවශ්‍ය නැත.",
     faq3Q: "Cancel කරන්න ඕන වුණොත්?",
     faq3A: "Lock-in contracts නැත. Account settings වලින් ඕනෑම වෙලාවක cancel කරන්න. යන්න කලින් data export කරන්න — ඒ ඔබේ, අපේ නෙවෙයි.",
+
+    // FIX: Removed "Q4 2026" specific date
     faq4Q: "Pronto/Domex APIs සමඟ directly integrate වෙනවද?",
-    faq4A: "දැනට, waybills manually paste කරන්න උපරිම courier flexibility සඳහා. Courier APIs සමඟ direct integration අපේ near-term roadmap එකේ (Q4 2026).",
+    faq4A: "දැනට, waybills manually paste කරන්න. Courier APIs සමඟ direct integration අපේ roadmap එකේ — ready වූ විට notify කරන්නෙමු.",
+
+    // FIX: Multi-user not built yet — updated to honest answer
     faq5Q: "මගේ staff ට access දෙන්න පුළුවන්ද?",
-    faq5A: "ඔව්. Growth plan එකෙන් ඉහළට role-based permissions (Admin, Manager, Staff) සහිත multi-user access ඇතුළත්. හැමෝම බලන්න ඕන දේ විතරක් බලයි.",
+    faq5A: "Multi-user access with role-based permissions (Admin, Manager, Staff) paid plans සඳහා roadmap එකේ ඇත. දැනට single login. ඔබේ business සඳහා priority නම් අප හා සම්බන්ධ වන්න.",
 
     finalHeadline:
       "Paper Books සහ WhatsApp Chaos එක අතහරින්න සූදානම්ද?",
+
+    // FIX: Removed "14-day trial" — no trial system
     finalSubheadline:
-      "දින 14ක free trial එක start කරන්න. සිංහලෙන් හෝ English වලින් 1-on-1 call එකකින් onboard වෙන්න. Card නැත, pressure නැත.",
+      "නොමිලේ ආරම්භ කරන්න — මාසිකව orders 50ක්, card අවශ්‍ය නැත. සිංහලෙන් හෝ English වලින් personal onboarding call එකක් ලබා ගන්න.",
+
     bookDemo:
-      "විනාඩි 15ක Demo Call එකක් Book කරන්න",
+      "WhatsApp හරහා demo book කරන්න",
+
+    // FIX: Removed "200+ businesses" fabricated number
     joinBusinesses:
-      "Ordera use කරන 200+ ශ්‍රී ලාංකික ව්‍යාපාර වලට join වෙන්න",
+      "Beta කාලය නොමිලේ — card අවශ්‍ය නැත",
   },
 } as const;
 
@@ -1029,6 +1071,7 @@ export const PAYMENT_METHODS = [
   "bank_transfer",
   "cash",
 ] as const;
+
 export const PAYMENT_STATUSES = [
   "unpaid",
   "paid",

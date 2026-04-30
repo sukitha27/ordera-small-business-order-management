@@ -346,17 +346,17 @@ function LandingPage() {
             </div>
 
             {/* Floating Badge */}
-            <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-xl px-4 py-3 shadow-lg">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-success/10 flex items-center justify-center">
-                  <TrendingUp className="h-4 w-4 text-success" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold">+97%</div>
-                  <div className="text-xs text-muted-foreground">COD collection rate</div>
-                </div>
+          <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-xl px-4 py-3 shadow-lg">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <TrendingUp className="h-4 w-4 text-primary" />
+              </div>
+              <div>
+                <div className="text-sm font-bold">Free</div>
+                <div className="text-xs text-muted-foreground">during beta</div>
               </div>
             </div>
+          </div>
           </motion.div>
         </div>
       </section>
@@ -564,14 +564,14 @@ function LandingPage() {
               <h4 className="font-semibold mb-3 text-sm">Legal</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <a href="/privacy" className="hover:text-foreground transition-colors">
+                  <Link to="/privacy" className="hover:text-foreground transition-colors">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/terms" className="hover:text-foreground transition-colors">
+                  <Link to="/terms" className="hover:text-foreground transition-colors">
                     Terms of Service
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
