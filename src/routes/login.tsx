@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import { Captcha } from "@/components/app/Captcha";
 import { toast } from "sonner";
+import { CheckCircle2 } from "lucide-react";
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
 
@@ -20,28 +21,21 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // Captcha token expires after ~5 min; we ask the user to re-verify if so.
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     if (TURNSTILE_SITE_KEY && !captchaToken) {
       return toast.error(t("completeCaptcha"));
     }
-
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-      options: {
-        captchaToken: captchaToken ?? undefined,
-      },
+      options: { captchaToken: captchaToken ?? undefined },
     });
     setLoading(false);
     if (error) {
-      // Captcha token is single-use — clear it on any failure so the user
-      // gets a fresh challenge for their next attempt.
       setCaptchaToken(null);
       return toast.error(error.message);
     }
@@ -51,33 +45,93 @@ function LoginPage() {
 
   return (
     <div className="min-h-screen grid md:grid-cols-2">
+
+      {/* ── Left panel ── */}
       <div
-        className="hidden md:flex items-center justify-center p-12 text-primary-foreground relative overflow-hidden"
+        className="hidden md:flex flex-col justify-between p-12 text-primary-foreground relative overflow-hidden"
         style={{ background: "var(--gradient-hero)" }}
       >
-        <div className="max-w-md">
-          <Link to="/" className="flex items-center gap-2 mb-8">
-            <div className="h-9 w-9 rounded-lg bg-white/20 backdrop-blur" />
-            <span className="text-2xl font-bold">Ordera</span>
+        {/* Decorative blobs */}
+        <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute -bottom-32 -right-16 h-80 w-80 rounded-full bg-white/5 blur-3xl" />
+
+        <div className="relative">
+          {/* Logo */}
+          <Link to="/" className="inline-flex items-center gap-3 mb-12">
+            <img
+              src="/logo-lockup-inverse.svg"
+              alt="Ordera"
+              className="h-9 w-auto"
+              onError={(e) => {
+                // Fallback if SVG not found
+                const el = e.currentTarget as HTMLImageElement;
+                el.style.display = "none";
+                const next = el.nextElementSibling as HTMLElement | null;
+                if (next) next.style.display = "flex";
+              }}
+            />
+            {/* Fallback wordmark */}
+            <span className="text-2xl font-bold hidden items-center gap-2">
+              <div className="h-8 w-8 rounded-lg bg-white/20 flex items-center justify-center text-sm font-bold">O</div>
+              Ordera
+            </span>
           </Link>
-          <h2 className="text-4xl font-bold mb-4">{t("welcome")}</h2>
-          <p className="text-primary-foreground/80 text-lg">{t("tagline")}</p>
+
+          <h2 className="text-4xl font-bold mb-3">{t("welcome")}</h2>
+          <p className="text-primary-foreground/75 text-lg mb-10">{t("tagline")}</p>
+
+          {/* Feature bullets */}
+          <div className="space-y-4">
+            {[
+              "COD & bank slip verification",
+              "Pronto, Domex, Koombiyo dispatch",
+              "Sinhala + English dashboard",
+              "Public order form for customers",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center gap-3">
+                <CheckCircle2 className="h-5 w-5 text-white/60 shrink-0" />
+                <span className="text-primary-foreground/80 text-sm">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom badge */}
+        <div className="relative">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-primary-foreground/80">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            Free during beta — no card needed
+          </div>
         </div>
       </div>
+
+      {/* ── Right panel — form ── */}
       <div className="flex items-center justify-center p-8">
         <form onSubmit={onSubmit} className="w-full max-w-sm space-y-5">
+          {/* Mobile logo */}
           <div className="md:hidden mb-8">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg" style={{ background: "var(--gradient-primary)" }} />
-              <span className="text-xl font-bold">Ordera</span>
+            <Link to="/" className="inline-flex items-center gap-2">
+              <img src="/ordera-logo.svg" alt="Ordera" className="h-8 w-auto light-only" />
+              <img src="/logo-lockup-inverse.svg" alt="Ordera" className="h-8 w-auto dark-only" />
             </Link>
           </div>
+
           <div>
             <h1 className="text-3xl font-bold">{t("signIn")}</h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              Welcome back to Ordera
+            </p>
           </div>
+
           <div className="space-y-2">
             <Label>{t("email")}</Label>
-            <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+            />
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -94,6 +148,7 @@ function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
             />
           </div>
 
@@ -111,8 +166,9 @@ function LoginPage() {
             className="w-full"
             disabled={loading || (!!TURNSTILE_SITE_KEY && !captchaToken)}
           >
-            {loading ? "..." : t("signIn")}
+            {loading ? "Signing in..." : t("signIn")}
           </Button>
+
           <p className="text-sm text-center text-muted-foreground">
             {t("noAccount")}{" "}
             <Link to="/signup" className="text-primary font-medium hover:underline">
