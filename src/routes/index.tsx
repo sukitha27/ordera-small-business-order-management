@@ -20,9 +20,30 @@ import { FeatureSection } from "@/components/landing/FeatureSection";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { LandingThemeToggle } from "@/components/landing/LandingThemeToggle";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { Marquee } from "@/components/ui/marquee";
 
-// ── Update with your real WhatsApp number ──────────────────────────────────
-const WHATSAPP_NUMBER = "94761148054"; // Replace with your actual WhatsApp number, including country code (e.g., "94761148054" for Sri Lanka)
+const WHATSAPP_NUMBER = "94761148054";
+
+const COURIER_LOGOS = [
+  { src: "/koombiyo.png", alt: "Koombiyo" },
+  { src: "/pronto_logo.png", alt: "Pronto" },
+  { src: "/domex.png", alt: "Domex" },
+  { src: "/fadar.png", alt: "Fardar" },
+  { src: "/texpress.png", alt: "TransExpress" },
+  { src: "/royalelogo.png", alt: "Royal Express" },
+];
+
+function CourierLogo({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="mx-10 flex items-center justify-center">
+      <img
+        src={src}
+        alt={alt}
+        className="h-12 w-auto max-w-40 object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+      />
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -32,7 +53,6 @@ function LandingPage() {
   const { user, t, loading, lang, setLang } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Redirect authenticated users to dashboard
   if (!loading && user) return <Navigate to="/dashboard" />;
 
   const painPoints = [
@@ -104,13 +124,11 @@ function LandingPage() {
       {/* ==================== NAVIGATION ==================== */}
       <header className="border-b border-border/60 backdrop-blur sticky top-0 z-30 bg-background/80">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6 py-3">
-          {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <img src="/ordera-logo.svg" alt="Ordera" className="h-7 md:h-8 w-auto light-only" />
             <img src="/logo-lockup-inverse.svg" alt="Ordera" className="h-7 md:h-8 w-auto dark-only" />
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
             <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               {t("features")}
@@ -120,7 +138,6 @@ function LandingPage() {
             </a>
           </nav>
 
-          {/* Desktop Controls */}
           <div className="hidden lg:flex items-center gap-3">
             <div className="flex items-center rounded-lg border border-border bg-card overflow-hidden">
               <button
@@ -149,7 +166,6 @@ function LandingPage() {
             </Link>
           </div>
 
-          {/* Mobile Controls */}
           <div className="flex lg:hidden items-center gap-2">
             <LandingThemeToggle />
             <Link to="/signup">
@@ -173,7 +189,6 @@ function LandingPage() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -229,10 +244,9 @@ function LandingPage() {
         )}
       </header>
 
-      {/* ==================== HERO SECTION ==================== */}
+      {/* ==================== HERO ==================== */}
       <section className="container mx-auto px-6 pt-20 pb-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -249,7 +263,6 @@ function LandingPage() {
               {t("heroSubheadline")}
             </p>
 
-            {/* Honest beta badge — no fake reviews */}
             <div className="flex items-center gap-3 mb-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm text-emerald-700 dark:text-emerald-400 font-medium">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -264,7 +277,6 @@ function LandingPage() {
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              {/* Fix 3: was setIsVideoOpen(true) — now scrolls to features */}
               <a
                 href="#features"
                 className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -274,7 +286,6 @@ function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Right Column - Dashboard Preview */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -286,7 +297,6 @@ function LandingPage() {
               style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-elegant)" }}
             >
               <div className="rounded-xl bg-card overflow-hidden border border-border">
-                {/* Mock Browser Chrome */}
                 <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-muted/30">
                   <div className="flex gap-1.5">
                     <div className="h-3 w-3 rounded-full bg-red-500/80" />
@@ -298,7 +308,6 @@ function LandingPage() {
                   </div>
                 </div>
 
-                {/* Dashboard Stats */}
                 <div className="grid grid-cols-3 gap-px bg-border">
                   {[
                     { label: t("revenue"), value: "Rs. 2,84,500", sub: "+12% " + t("monthRevenue"), color: "text-success" },
@@ -313,7 +322,6 @@ function LandingPage() {
                   ))}
                 </div>
 
-                {/* Pipeline */}
                 <div className="p-4">
                   <div className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wider">
                     Order Pipeline
@@ -334,7 +342,6 @@ function LandingPage() {
                   </div>
                 </div>
 
-                {/* Notification */}
                 <div className="mx-4 mb-4 p-3 rounded-lg bg-success/5 border border-success/20">
                   <div className="flex items-center gap-2 text-xs">
                     <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
@@ -345,33 +352,40 @@ function LandingPage() {
               </div>
             </div>
 
-            {/* Floating Badge */}
-          <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-xl px-4 py-3 shadow-lg">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <TrendingUp className="h-4 w-4 text-primary" />
-              </div>
-              <div>
-                <div className="text-sm font-bold">Free</div>
-                <div className="text-xs text-muted-foreground">during beta</div>
+            {/* Honest floating badge — no fake stats */}
+            <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-xl px-4 py-3 shadow-lg">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <TrendingUp className="h-4 w-4 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold">Free</div>
+                  <div className="text-xs text-muted-foreground">during beta</div>
+                </div>
               </div>
             </div>
-          </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ==================== TRUST BAR ==================== */}
-      {/* Fix 2: Removed courier logos that implied API integration.
-          Now honest: "Works with all major SL couriers" */}
-      <section className="border-y border-border bg-card/30">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">Works with all major SL couriers</span>
-            {["Koombiyo", "Pronto", "Domex", "Fardar", "TransExpress", "Royal Express"].map((courier) => (
-              <span key={courier} className="font-semibold text-foreground/70">{courier}</span>
-            ))}
-          </div>
+      {/* ==================== TRUST BAR — Courier Marquee ==================== */}
+      <section className="border-y border-border bg-card/30 overflow-hidden py-6">
+        <div className="text-center mb-5">
+          <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">
+            Works with all major SL couriers
+          </span>
+        </div>
+
+        <Marquee pauseOnHover className="[--duration:40s]">
+          {COURIER_LOGOS.map((logo) => (
+            <CourierLogo key={logo.alt} {...logo} />
+          ))}
+        </Marquee>
+
+        <div className="text-center mt-4">
+          <span className="text-xs text-muted-foreground/40">
+            Manual dispatch — courier APIs coming soon
+          </span>
         </div>
       </section>
 
@@ -432,7 +446,6 @@ function LandingPage() {
       </section>
 
       {/* ==================== PRICING ==================== */}
-      {/* Now using PricingSection component with full comparison table */}
       <PricingSection />
 
       {/* ==================== FAQ ==================== */}
@@ -480,7 +493,6 @@ function LandingPage() {
                 {t("startTrial")} <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
-            {/* Fix 4: was a broken <button> — now links to WhatsApp */}
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
                 "Hi, I'd like to book a demo of Ordera for my business.",
@@ -500,11 +512,9 @@ function LandingPage() {
       </section>
 
       {/* ==================== FOOTER ==================== */}
-      {/* Fix 5: All dead links removed. Only real working links remain. */}
       <footer className="border-t border-border mt-20 bg-card/50">
         <div className="container mx-auto px-6 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            {/* Brand */}
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
                 <img src="/ordera-logo.svg" alt="Ordera" className="h-8 w-auto light-only" />
@@ -513,26 +523,16 @@ function LandingPage() {
               <p className="text-sm text-muted-foreground">{t("footerLine")}</p>
             </div>
 
-            {/* Product */}
             <div>
               <h4 className="font-semibold mb-3 text-sm">Product</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-                </li>
-                <li>
-                  <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
-                </li>
-                <li>
-                  <Link to="/login" className="hover:text-foreground transition-colors">Sign in</Link>
-                </li>
-                <li>
-                  <Link to="/signup" className="hover:text-foreground transition-colors">Sign up free</Link>
-                </li>
+                <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
+                <li><a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a></li>
+                <li><Link to="/login" className="hover:text-foreground transition-colors">Sign in</Link></li>
+                <li><Link to="/signup" className="hover:text-foreground transition-colors">Sign up free</Link></li>
               </ul>
             </div>
 
-            {/* Support */}
             <div>
               <h4 className="font-semibold mb-3 text-sm">Support</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
@@ -559,7 +559,6 @@ function LandingPage() {
               </ul>
             </div>
 
-            {/* Legal */}
             <div>
               <h4 className="font-semibold mb-3 text-sm">Legal</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
@@ -577,7 +576,6 @@ function LandingPage() {
             </div>
           </div>
 
-          {/* Bottom bar */}
           <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground max-w-5xl mx-auto">
             <p>&copy; 2026 Velora Technologies. Made in Sri Lanka 🇱🇰</p>
             <div className="flex items-center gap-4">
