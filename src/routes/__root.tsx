@@ -114,28 +114,35 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ordera — Order management for Sri Lankan businesses" },
+      { title: "Ordera - Order management for Sri Lankan businesses" },
       { name: "description", content: "Track orders, products, COD payments and courier dispatch in one clean dashboard built for Sri Lankan online businesses." },
       { name: "author", content: "Ordera" },
-      { property: "og:title", content: "Ordera — Order management for Sri Lankan businesses" },
+      { property: "og:title", content: "Ordera - Order management for Sri Lankan businesses" },
       { property: "og:description", content: "Track orders, products, COD payments and courier dispatch in one clean dashboard." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://ordera.veloratech.com.lk" },
+      { property: "og:image", content: "https://ordera.veloratech.com.lk/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://ordera.veloratech.com.lk/og-image.png" },
+      { name: "theme-color", content: "#1e1b4b" },
+      { name: "apple-mobile-web-app-title", content: "Ordera" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap",
-      },
-    ],
+  { rel: "stylesheet", href: appCss },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap",
+  },
+  // ── Favicon ────────────────────────────────────────────────────────────
+  { rel: "icon", type: "image/png", href: "/favicon-96x96.png", sizes: "96x96" },
+  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+  { rel: "shortcut icon", href: "/favicon.ico" },
+  { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+  { rel: "manifest", href: "/site.webmanifest" },
+],
     scripts: [
       // Inline theme init — runs before React, prevents flash of light theme
       // for users who prefer dark mode. Reads localStorage + system preference
