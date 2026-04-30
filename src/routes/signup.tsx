@@ -87,7 +87,7 @@ function SignupPage() {
 
         <div className="relative">
           {/* Logo */}
-          <Link to="/" className="inline-flex items-center gap-3 mb-12">
+          <Link to="/" className="inline-flex items-center gap-3 mb-16">
             <img
               src="/logo-lockup-inverse.svg"
               alt="Ordera"
