@@ -20,12 +20,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as OrderSlugRouteImport } from './routes/order.$slug'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppReportsRouteImport } from './routes/_app/reports'
-import { Route as AppProductsRouteImport } from './routes/_app/products'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppCustomersRouteImport } from './routes/_app/customers'
 import { Route as AppAdminRouteImport } from './routes/_app/admin'
+import { Route as AppProductsIndexRouteImport } from './routes/_app/products.index'
 import { Route as AppOrdersIndexRouteImport } from './routes/_app/orders.index'
 import { Route as AppInquiriesIndexRouteImport } from './routes/_app/inquiries.index'
+import { Route as AppProductsProductIdRouteImport } from './routes/_app/products.$productId'
 import { Route as AppOrdersPrintBatchRouteImport } from './routes/_app/orders.print-batch'
 import { Route as AppOrdersNewRouteImport } from './routes/_app/orders.new'
 import { Route as AppOrdersOrderIdRouteImport } from './routes/_app/orders.$orderId'
@@ -87,11 +88,6 @@ const AppReportsRoute = AppReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => AppRoute,
 } as any)
-const AppProductsRoute = AppProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -107,6 +103,11 @@ const AppAdminRoute = AppAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProductsIndexRoute = AppProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppOrdersIndexRoute = AppOrdersIndexRouteImport.update({
   id: '/orders/',
   path: '/orders/',
@@ -115,6 +116,11 @@ const AppOrdersIndexRoute = AppOrdersIndexRouteImport.update({
 const AppInquiriesIndexRoute = AppInquiriesIndexRouteImport.update({
   id: '/inquiries/',
   path: '/inquiries/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProductsProductIdRoute = AppProductsProductIdRouteImport.update({
+  id: '/products/$productId',
+  path: '/products/$productId',
   getParentRoute: () => AppRoute,
 } as any)
 const AppOrdersPrintBatchRoute = AppOrdersPrintBatchRouteImport.update({
@@ -159,7 +165,6 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AppAdminRoute
   '/customers': typeof AppCustomersRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
-  '/products': typeof AppProductsRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
   '/order/$slug': typeof OrderSlugRoute
@@ -167,8 +172,10 @@ export interface FileRoutesByFullPath {
   '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
   '/orders/print-batch': typeof AppOrdersPrintBatchRoute
+  '/products/$productId': typeof AppProductsProductIdRoute
   '/inquiries/': typeof AppInquiriesIndexRoute
   '/orders/': typeof AppOrdersIndexRoute
+  '/products/': typeof AppProductsIndexRoute
   '/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
 }
@@ -183,7 +190,6 @@ export interface FileRoutesByTo {
   '/admin': typeof AppAdminRoute
   '/customers': typeof AppCustomersRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
-  '/products': typeof AppProductsRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
   '/order/$slug': typeof OrderSlugRoute
@@ -191,8 +197,10 @@ export interface FileRoutesByTo {
   '/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/orders/new': typeof AppOrdersNewRoute
   '/orders/print-batch': typeof AppOrdersPrintBatchRoute
+  '/products/$productId': typeof AppProductsProductIdRoute
   '/inquiries': typeof AppInquiriesIndexRoute
   '/orders': typeof AppOrdersIndexRoute
+  '/products': typeof AppProductsIndexRoute
   '/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
 }
@@ -209,7 +217,6 @@ export interface FileRoutesById {
   '/_app/admin': typeof AppAdminRoute
   '/_app/customers': typeof AppCustomersRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
-  '/_app/products': typeof AppProductsRoute
   '/_app/reports': typeof AppReportsRoute
   '/_app/settings': typeof AppSettingsRoute
   '/order/$slug': typeof OrderSlugRoute
@@ -217,8 +224,10 @@ export interface FileRoutesById {
   '/_app/orders/$orderId': typeof AppOrdersOrderIdRouteWithChildren
   '/_app/orders/new': typeof AppOrdersNewRoute
   '/_app/orders/print-batch': typeof AppOrdersPrintBatchRoute
+  '/_app/products/$productId': typeof AppProductsProductIdRoute
   '/_app/inquiries/': typeof AppInquiriesIndexRoute
   '/_app/orders/': typeof AppOrdersIndexRoute
+  '/_app/products/': typeof AppProductsIndexRoute
   '/_app/orders/$orderId/invoice': typeof AppOrdersOrderIdInvoiceRoute
   '/_app/orders/$orderId/waybill': typeof AppOrdersOrderIdWaybillRoute
 }
@@ -235,7 +244,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/customers'
     | '/dashboard'
-    | '/products'
     | '/reports'
     | '/settings'
     | '/order/$slug'
@@ -243,8 +251,10 @@ export interface FileRouteTypes {
     | '/orders/$orderId'
     | '/orders/new'
     | '/orders/print-batch'
+    | '/products/$productId'
     | '/inquiries/'
     | '/orders/'
+    | '/products/'
     | '/orders/$orderId/invoice'
     | '/orders/$orderId/waybill'
   fileRoutesByTo: FileRoutesByTo
@@ -259,7 +269,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/customers'
     | '/dashboard'
-    | '/products'
     | '/reports'
     | '/settings'
     | '/order/$slug'
@@ -267,8 +276,10 @@ export interface FileRouteTypes {
     | '/orders/$orderId'
     | '/orders/new'
     | '/orders/print-batch'
+    | '/products/$productId'
     | '/inquiries'
     | '/orders'
+    | '/products'
     | '/orders/$orderId/invoice'
     | '/orders/$orderId/waybill'
   id:
@@ -284,7 +295,6 @@ export interface FileRouteTypes {
     | '/_app/admin'
     | '/_app/customers'
     | '/_app/dashboard'
-    | '/_app/products'
     | '/_app/reports'
     | '/_app/settings'
     | '/order/$slug'
@@ -292,8 +302,10 @@ export interface FileRouteTypes {
     | '/_app/orders/$orderId'
     | '/_app/orders/new'
     | '/_app/orders/print-batch'
+    | '/_app/products/$productId'
     | '/_app/inquiries/'
     | '/_app/orders/'
+    | '/_app/products/'
     | '/_app/orders/$orderId/invoice'
     | '/_app/orders/$orderId/waybill'
   fileRoutesById: FileRoutesById
@@ -389,13 +401,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppReportsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/products': {
-      id: '/_app/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof AppProductsRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -417,6 +422,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/products/': {
+      id: '/_app/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof AppProductsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/orders/': {
       id: '/_app/orders/'
       path: '/orders'
@@ -429,6 +441,13 @@ declare module '@tanstack/react-router' {
       path: '/inquiries'
       fullPath: '/inquiries/'
       preLoaderRoute: typeof AppInquiriesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/products/$productId': {
+      id: '/_app/products/$productId'
+      path: '/products/$productId'
+      fullPath: '/products/$productId'
+      preLoaderRoute: typeof AppProductsProductIdRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/orders/print-batch': {
@@ -505,28 +524,30 @@ interface AppRouteChildren {
   AppAdminRoute: typeof AppAdminRoute
   AppCustomersRoute: typeof AppCustomersRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
-  AppProductsRoute: typeof AppProductsRoute
   AppReportsRoute: typeof AppReportsRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppOrdersOrderIdRoute: typeof AppOrdersOrderIdRouteWithChildren
   AppOrdersNewRoute: typeof AppOrdersNewRoute
   AppOrdersPrintBatchRoute: typeof AppOrdersPrintBatchRoute
+  AppProductsProductIdRoute: typeof AppProductsProductIdRoute
   AppInquiriesIndexRoute: typeof AppInquiriesIndexRoute
   AppOrdersIndexRoute: typeof AppOrdersIndexRoute
+  AppProductsIndexRoute: typeof AppProductsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppAdminRoute: AppAdminRoute,
   AppCustomersRoute: AppCustomersRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
-  AppProductsRoute: AppProductsRoute,
   AppReportsRoute: AppReportsRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppOrdersOrderIdRoute: AppOrdersOrderIdRouteWithChildren,
   AppOrdersNewRoute: AppOrdersNewRoute,
   AppOrdersPrintBatchRoute: AppOrdersPrintBatchRoute,
+  AppProductsProductIdRoute: AppProductsProductIdRoute,
   AppInquiriesIndexRoute: AppInquiriesIndexRoute,
   AppOrdersIndexRoute: AppOrdersIndexRoute,
+  AppProductsIndexRoute: AppProductsIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

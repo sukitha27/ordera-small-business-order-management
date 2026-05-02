@@ -108,6 +108,37 @@ function DashboardPage() {
     },
   });
 
+  // Low stock alert for dashboard
+  // action cards container (declared early so multiple queries can push to it)
+  const actionCards: any[] = [];
+
+  const { data: lowStockCount = 0 } = useQuery({
+  queryKey: ["dashboard-low-stock", business?.id],
+  enabled: !!business?.id,
+  queryFn: async () => {
+    const { count } = await supabase
+      .from("products")
+      .select("id", { count: "exact", head: true })
+      .lte("stock", 5)
+      .gt("stock", 0)
+      .eq("is_active", true);
+    return count ?? 0;
+  },
+});
+
+if (lowStockCount > 0) {
+  actionCards.push({
+    key: "low-stock",
+    icon: Package,
+    title: "products running low on stock",
+    count: lowStockCount,
+    meta: "Restock before you run out",
+    to: "/products" as const,
+    search: {},
+    tone: "amber",
+  });
+}
+
   // ── Pending inquiries ───────────────────────────────────────────────────────
   const { data: pendingInquiries = 0 } = useQuery({
     queryKey: ["dashboard-inquiries", business?.id],
@@ -172,7 +203,6 @@ function DashboardPage() {
   ];
 
   // ── Action cards ────────────────────────────────────────────────────────────
-  const actionCards = [];
   if (pendingInquiries > 0) {
     actionCards.push({
       key: "pending-inquiries",
